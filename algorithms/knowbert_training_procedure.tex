@@ -1,0 +1,21 @@
+\scalebox{.7}{                        %new code
+    \begin{algorithm}[H]
+    \DontPrintSemicolon
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
+    \Input{A pretrained BERT model and $J$ KBs}
+    \Output{KnowBert}
+    \For{$j \gets 1$ \textbf{to} $J$}{
+        Compute entity embeddings for KB$_{j}$ \;
+        \If{Entity Linking Supervision is available}{
+            Freeze all network parameters apart from those in test~-~test \;
+            Train to convergence using \eqref{eq:entity_linker_maximum_likelihood} (WordNet) or \eqref{eq:entity_linker_max_margin} (Wiki)  \;
+            }
+            Initialise $\WWW^{\mathrm{proj}}_2$ as $(\WWW_1^{\mathrm{proj}})^{-1}$ \;
+            Unfreeze all model parameter apart from the entity embeddings \;
+            Minimise the KnowBERT objective \;
+            $\mathcal{L}_{\mathrm{KnowBERT}} = \mathcal{L}_{\mathrm{BERT}} + \sum_i^j \mathcal{L}_{\mathrm{EL}_i} $\;
+        }
+    \caption{KnowBERT Training Procedure}
+\end{algorithm}
+}

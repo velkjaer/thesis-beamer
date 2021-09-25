@@ -1,0 +1,45 @@
+\documentclass[aspectratio=169]{beamer}
+
+% Default packages
+\input{auxillary/preamble}
+\input{auxillary/texdef}
+
+% Latin Modern
+\usepackage{lmodern}
+\usepackage{charter} % serif
+
+% Use DTU theme, see below for options
+\usetheme[department=compute]{DTU}
+
+\title[Thesis Defence | Victor Elkjær Birk]{Investigating state-of-the-art approaches to knowledge enhancing deep learning based language models}
+\author{Victor Elkjær Birk}
+\institute{DTU Compute, Cognitive Systems}
+\date{\today}
+	
+\newcommand{\tabitem}{{\color{dtured}$\bullet$} }
+
+\begin{document}
+
+% Title page
+\input{tex/aux_titlepage}
+% agenda
+\input{tex/aux_agenda}
+% TeX
+\input{tex/01motivation}
+\input{tex/02methods}
+\input{tex/03evaluation_setup}
+\input{tex/04knowledge_assessment}
+\input{tex/05fact_completion}
+\input{tex/06conclusion_and_outlook}
+% closing remarks
+\input{tex/aux_closing_remarks}
+% appendices
+\appendix
+\input{tex/app_methods}
+\input{tex/app_reproducibility}
+\input{tex/app_outlook}
+% Bibliography
+\bibliography{bib/references.bib}
+\bibliographystyle{apalike}
+
+\end{document}

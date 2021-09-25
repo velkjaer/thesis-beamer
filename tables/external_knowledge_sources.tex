@@ -1,0 +1,12 @@
+\begin{table}[t!]
+    \centering
+    \begin{tabular}{c|c|c|c}
+        \textbf{Category} & \textbf{Wiki (KnowBERT)} & \textbf{WordNet (KnowBERT)} & \textbf{Linked-WikiText-2} \\\hline
+        \# of entities & 470K & 117K & 46K \\
+        \# of relations & N/A & 2$\times$28+1 & 1,291 \\ 
+        Adheres to & KB Def. & KG Def. & KG def. \\\hline
+        Produced by & Document-level EL\footnote{\cite{Ganea2017DeepAttention}} & TucKER\footnote{\cite{Balazevic2019TuckER:Completion}} \& Gensen\footnote{\cite{Subramanian2018LearningLearning}} \footnote{\cite{Balazevic2019TuckER:Completion}} & TransE\footnote{\cite{NIPS2013_5071}}\\
+        Objective           & Max-margin &     NLL      &   NLL \\
+        Entity dim., $E$    &   300      &     200      &   256 \\\hline 
+    \end{tabular}
+\end{table}

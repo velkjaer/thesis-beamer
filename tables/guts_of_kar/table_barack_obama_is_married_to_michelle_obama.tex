@@ -1,0 +1,34 @@
+\begin{table}[t!]
+\tiny
+\centering
+\begin{tabular}{|p{2.4cm}|p{2.8cm}c|p{2.8cm}c|}
+\hline
+\multirow{3}{*}{\textbf{Candidate Spans}} & \multicolumn{4}{c|}{\textsf{barack obama is married to michelle obama . }} \\
+& \multicolumn{2}{c}{Priors (top-2)} & \multicolumn{2}{c|}{Norm. EL Scores (top-2)} \\ \cline{2-5}
+& \multicolumn{1}{c|}{\textsf{ent}} & $p(\mathsf{ent})$ & \multicolumn{1}{c|}{\textsf{ent}} & $\psi_{m,k}$ \\ \hline 
+\multicolumn{5}{c}{\textbf{\textsf{Wiki}}}\\
+\hline
+\multirow{2}{*}{\textsf{barack}}& Barack Obama & 0.53 & 2000 Camp David Summit & 0.07\\ 
+& Barack (brandy) & 0.15 & Barack Obama & 0.07\\\hline 
+\multirow{2}{*}{\textsf{barack obama}}& Barack Obama & 0.54 & Barack Obama & 0.06\\ 
+& Barack Obama, Sr. & 0.09 & 2009 Nobel Peace Prize & 0.04\\\hline 
+\multirow{2}{*}{\textsf{obama}}& Barack Obama & 0.47 & Community organizing & 0.03\\ 
+& Obama, Fukui & 0.05 & Presidency of Barack Obama & 0.03\\\hline 
+\multirow{2}{*}{\textsf{married}}& Marriage & 0.32 & Jennifer Siebel & 0.03\\ 
+& Same-sex marriage in California & 0.13 & Kateryna Yushchenko & 0.03\\\hline 
+\multirow{2}{*}{\textsf{michelle}}& Michelle Obama & 0.40 & Michelle Lang & 0.03\\ 
+& Michelle (song) & 0.24 & Michelle Pfeiffer & 0.03\\\hline 
+\multirow{2}{*}{\textsf{michelle obama}}& Michelle Obama & 1.00 & Michelle Obama & 0.60\\ 
+& Celebrity (game) & 0.00 & Celebrity (game) & 0.40\\\hline 
+\multirow{2}{*}{\textsf{michelle obama .}}& Michelle Obama & 1.00 & Michelle Obama & 1.00\\ 
+& N/A & 0.00 & N/A & 0.00\\\hline 
+\multirow{2}{*}{\textsf{obama}}& Barack Obama & 0.47 & Barack Obama citizenship conspiracy theories & 0.03\\ 
+& Obama, Fukui & 0.05 & Community organizing & 0.03\\\hline 
+\multicolumn{5}{c}{\textbf{\textsf{Wordnet}}}\\
+\hline
+\multirow{2}{*}{\textsf{is}}& be.v.01 & 0.64 & be.v.01 & 1.00\\ 
+& be.v.02 & 0.18 & be.v.03 & 0.00\\\hline 
+\multirow{2}{*}{\textsf{married}}& marry.v.01 & 0.94 & marry.v.01 & 1.00\\ 
+& marry.v.02 & 0.06 & marry.v.02 & 0.00\\\hline 
+\end{tabular}
+\end{table}

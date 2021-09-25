@@ -1,0 +1,37 @@
+\vspace{-0.1cm}
+\begin{table}[t!]
+\tiny
+\centering
+\begin{tabular}{|p{2.4cm}|p{2.8cm}c|p{2.8cm}c|}
+\hline
+\multirow{3}{*}{\textbf{Candidate Spans}} & \multicolumn{4}{c|}{\textsf{hamlet is a book that was written by william shakespeare . }} \\
+& \multicolumn{2}{c}{Priors (top-2)} & \multicolumn{2}{c|}{Norm. EL Scores (top-2)} \\ \cline{2-5}
+& \multicolumn{1}{c|}{\textsf{ent}} & $p(\mathsf{ent})$ & \multicolumn{1}{c|}{\textsf{ent}} & $\psi_{m,k}$ \\ \hline 
+\multicolumn{5}{c}{\textbf{\textsf{Wiki}}}\\
+\hline
+\multirow{2}{*}{\textsf{hamlet}}& Hamlet & 0.46 & Hamlet (2009 TV film) & 0.03\\ 
+& Hamlet (1948 film) & 0.04 & Hamlet, Indiana & 0.03\\\hline 
+\multirow{2}{*}{\textsf{william shakespeare}}& William Shakespeare & 0.63 & William Shakespeare (American football) & 0.06\\ 
+& William Shakespeare (American football) & 0.09 & To be, or not to be & 0.06\\\hline 
+\multirow{2}{*}{\textsf{shakespeare}}& William Shakespeare & 0.57 & Geoffrey Shakespeare & 0.03\\ 
+& Shakespeare's plays & 0.02 & Arthur Shakespeare & 0.03\\\hline 
+\multicolumn{5}{c}{\textbf{\textsf{Wordnet}}}\\
+\hline
+\multirow{2}{*}{\textsf{hamlet}}& hamlet.n.01 & 0.50 & hamlet.n.01 & 1.00\\ 
+& village.n.02 & 0.25 & village.n.02 & 0.00\\\hline 
+\multirow{2}{*}{\textsf{is}}& be.v.01 & 0.64 & be.v.02 & 1.00\\ 
+& be.v.02 & 0.18 & be.v.01 & 0.00\\\hline 
+\multirow{2}{*}{\textsf{a}}& angstrom.n.01 & 0.50 & a.n.07 & 0.99\\ 
+& a.n.07 & 0.07 & angstrom.n.01 & 0.01\\\hline 
+\multirow{2}{*}{\textsf{book}}& book.n.01 & 0.59 & book.n.01 & 1.00\\ 
+& book.n.02 & 0.14 & script.n.01 & 0.00\\\hline 
+\multirow{2}{*}{\textsf{was}}& be.v.01 & 0.64 & be.v.01 & 0.99\\ 
+& be.v.02 & 0.18 & be.v.02 & 0.01\\\hline 
+\multirow{2}{*}{\textsf{written}}& write.v.01 & 0.38 & write.v.01 & 1.00\\ 
+& write.v.02 & 0.32 & spell.v.03 & 0.00\\\hline 
+\multirow{2}{*}{\textsf{by}}& by.r.01 & 0.75 & by.r.01 & 1.00\\ 
+& aside.r.06 & 0.25 & aside.r.06 & 0.00\\\hline 
+\multirow{2}{*}{\textsf{william shakespeare}}& shakespeare.n.01 & 1.00 & shakespeare.n.01 & 1.00\\ 
+& N/A & 0.00 & N/A & 0.00\\\hline 
+\end{tabular}
+\end{table}

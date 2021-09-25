@@ -1,0 +1,206 @@
+\section{Knowledge Assessment}
+
+% categories
+\begin{frame}{Fact-Completion Dataset}
+\input{tables/fact_completion_categories}
+
+Descriptions of the Fact Completion dataset for each category. Many of the following experiments are based 600 sentences from these categories (100 sentences each).
+\end{frame}
+
+\subsection{Into the guts of KnowBERT}
+
+\begin{frame}{Into the guts of the KAR mechanism}
+Recall this fella,
+\begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{graphics/kb/Knowbert_KAR_mechanism.pdf}
+\end{figure}
+\pause
+We focus know specifically on the \stepbox{DTU_yellow}{Mention Spans}, the \stepbox{DTU_purple}{Entity Linking}, and the \stepbox{DTU_blue}{Recontextualisation} steps.
+\end{frame}
+
+% \begin{frame}{The guts of KAR: Barack Obama}
+%     \KARPLOT{2}
+% \end{frame}
+% \begin{frame}{The guts of KAR: Barack Obama (Cont'd)}
+%     \input{tables/guts_of_kar/table_barack_obama_is_married_to_michelle_obama}
+% \end{frame}
+
+\begin{frame}{The guts of KAR: Kobe Bryant}
+    \KARPLOT{1}
+\end{frame}
+\begin{frame}{The guts of KAR: Kobe Bryant (Entities)}
+    \input{tables/guts_of_kar/table_kobe_bryant_was_born_in_philadelphia}
+\end{frame}
+
+
+\begin{frame}{The guts of KAR: The city of Kobe}
+    \KARPLOT{0}
+\end{frame}
+\begin{frame}{The guts of KAR: The city of Kobe (Entities)}
+    \vspace{-0.15cm}
+    \input{tables/guts_of_kar/table_kobe_is_a_city_in_the_state_of_japan}
+\end{frame}
+
+% Recurring Observations
+\begin{frame}{Recurring Observations: Attention Trends}
+\footnotesize
+\begin{columns}
+\begin{column}[T]{0.333\textwidth}<+->
+\colheading{DTU_red}{Nearest Neighbour Attention (NNA)}
+\begin{itemize}
+    \item For each token in the input sequence, the W2E attention tends to focus on the nearest neighbours candidate spans creating a pattern along the diagonal.
+    \item Similar to the original Encoder-Decoder attention of \cite{Bahdanau2014NeuralTranslate} 
+    \item Not affiliated with knowledge enhancement.
+\end{itemize}
+\end{column}
+\begin{column}[T]{0.333\textwidth}<+->
+\colheading{DTU_red}{Dominant Span Attention (DSA)}
+\begin{itemize}
+    \item Every/most tokens in the input sequence tend to attend to the same candidate-spans.
+    \item These are coined to be dominant. Two categories reoccur:
+    \begin{enumerate}
+        \item Real-world entities \\
+        \item Sentence structure
+    \end{enumerate}
+    \item Qualitative Assessment regarding knowledge-affiliation.
+\end{itemize}
+\end{column}
+\begin{column}[T]{0.333\textwidth}<+->
+\colheading{DTU_red}{Long-Distance Attention (L-DA)}
+\begin{itemize}
+    \item At subset of tokens, typically a few, attend to mention spans relatively far away. 
+    \item In the examples shown, we see this as attention between the antecedent and consequent. Hence found to occur between real-world entities.
+    \item We expect it to be present for the WordNet case with more complex sentence structures (not tested)
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Recurring Observations: Candidate Generator \& Entity Linking Trends}
+\footnotesize
+\begin{columns}
+\begin{column}[T]{0.5\textwidth}<+->
+\colheading{DTU_red}{Wikipedia KB}
+\begin{itemize}
+    \item \textbf{Candidate Generator} is well-functioning providing solid entities for each mention span \\
+    \item \textbf{Entity Linker} tends to average out the linking scores across the entities
+    \begin{itemize}
+        \item Luckily, we still consider the result to be knowledge enhancing conditioned on the fact that the Candidate generator is successful in generating relevant entities.
+        \item Initially thought that relevance-thresholding was accountable for averaging due to softmax properties.
+    \end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}[T]{0.5\textwidth}<+->
+\colheading{DTU_red}{WordNet KG}
+\begin{itemize}
+    \item \textbf{Candidate Generator} is well-functioning providing relevant entities for each mention span \\
+    \begin{itemize}
+        \item However, difficult to assess in detail as it requires linguistic skills beyond mine.
+    \end{itemize}
+    \item \textbf{Entity Linker}
+    \begin{itemize}
+        \item Generally tends to make the decision more sparse resulting in few relevant entities. \\
+        \item The sparsity makes sense based on the simple sentence constructions. 
+    \end{itemize}
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+% Contextual Word Embeddings
+\subsection{Contextual Embeddings}
+
+\begin{frame}{Contextual Word Embeddings}
+
+{\footnotesize
+\begin{itemize}
+    \item Adding KAR mechanism alters the contextual word representations originally produced by BERT.
+    \item To assess the way the additions of KAR mechanisms affect the representations, we seek to visualise the (knowledge enhanced) contextual word representation onto two dimensions
+    \item The dimensionality reduction techniques employed for doing so are Principal Component Analysis (PCA) and t-distributed Stochastic Neighbour Embeddings (t-SNE)
+    \item<+-> We use BERT-large as a baseline
+\end{itemize}
+
+\begin{columns}
+\begin{column}[T]{0.5\textwidth}<+->
+{\color{DTU_red}\rule{\textwidth}{2pt}}
+\textbf{We look for structure in terms of:}
+\begin{itemize}
+    \item Part-of-speech tags
+    \item Sentence structure
+    \item Overall clustering
+\end{itemize}
+\end{column}
+\begin{column}[T]{0.5\textwidth}<+->
+{\color{DTU_red}\rule{\textwidth}{2pt}}
+\textit{Note that in the following, we do not present any t-SNE plots, but save them for potential discussion}
+\end{column}
+\end{columns}
+}
+\end{frame}
+
+% sampled few
+
+% PCA
+\begin{frame}{Contextual Word Embeddings: PCA - from overview to sampled few}
+    \begin{figure}
+        \centering
+        \includegraphics[height=0.15\textheight]{graphics/contextual_embeddings/new/PCA_9512_1_2_baseline_testNoneNone.eps}
+    \end{figure}
+    \begin{figure}
+        \centering
+        \includegraphics[height=0.78\textheight]{graphics/contextual_embeddings/new/PCA_300_1_2_baseline_test_annotatedNone.eps}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Contextual Word Embeddings: PCA - from overview to sampled few}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+        \textbf{KnowBERT-wordnet}
+            \begin{figure}
+                \centering
+                \includegraphics[height=0.15\textheight]{graphics/contextual_embeddings/PCA_9512_2_3_knowbert_wordnetNone_title.eps}
+            \end{figure}
+            \begin{figure}
+                \centering
+                \includegraphics[height=0.55\textheight]{graphics/contextual_embeddings/PCA_1024_2_3_knowbert_wordnet_annotated_title.eps}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+        \textbf{KnowBERT-W+W}
+            \begin{figure}
+                \centering
+                \includegraphics[height=0.15\textheight]{graphics/contextual_embeddings/PCA_9512_1_2_knowbert_wiki_wordnetNone_title_USE.eps}
+            \end{figure}
+            \begin{figure}
+                \centering
+                \includegraphics[height=0.55\textheight]{graphics/contextual_embeddings/PCA_400_1_2_knowbert_wikiwordnet_annotated_title_USE.eps}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+% Recurring Observations
+\begin{frame}{Recurring Observations: Contextual Embeddings compared to BERT-large}
+\footnotesize
+\colheading{DTU_red}{\begin{center}\textbf{All three KnowBERT variants}\end{center}}
+\vspace{0.2cm}
+\textbf{Similar to baseline:}
+\begin{itemize}
+    \item Classification tokens, [CLS], are projected to locations distant from the center projected onto 1st and 2nd PCs,
+    \item Clear POS-tag related structures,
+\end{itemize}
+\textbf{Deviations from baseline:}
+\begin{itemize}
+    \item POS-tag clusters tend to be even more distinctive
+    \begin{itemize}
+        \item Especially regarding verbs,
+    \end{itemize}
+    \item Generally more dispersed, i.e., more variance per PC
+\end{itemize}
+
+\end{frame}
+
+
+

@@ -1,0 +1,36 @@
+\pgfplotscreateplotcyclelist{tb}{
+	very thick, DTU_navy_blue, smooth\\%
+	very thick, DTU_blue, smooth\\%
+	very thick, DTU_red, smooth\\%
+	very thick, DTU_orange, smooth\\%
+}
+
+\begin{tikzpicture}
+
+	 \begin{axis}[cycle list name=tb, 
+		grid=both,
+		grid style={solid,gray!30!white},
+		xmin=0,
+		xlabel={Step},
+		ylabel={F1 ($\mathsf{t}_t=\mathsf{R}$)},
+		ymax=1,
+		every x tick scale label/.style={
+			at={(1,0)},xshift=1pt,anchor=south west,inner sep=0pt
+		},
+		%ymode=log,
+		%x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+		%y label style={at={(axis description cs:-0.1,1)},anchor=east},
+		]
+		
+		% train
+		\addplot table [x=Step, y=Value, col sep=comma] {csv/kglm/run-discriminative_models_disco_apex_log_train-tag-kg_f1.csv};
+		\addplot table [x=Step, y=Value, col sep=comma] {csv/kglm/run-discriminative_models_disco_apex_log_validation-tag-kg_f1.csv};
+		
+		% validation
+		\addplot table [x=Step, y=Value, col sep=comma] {csv/kglm/run-kglm_skytsengel_train-tag-kg_f1.csv};
+		\addplot table [x=Step, y=Value, col sep=comma] {csv/kglm/run-kglm_skytsengel_validation-tag-kg_f1.csv};
+		
+ 		 %\legend{\textsf{disc}$_{\mathrm{train}}$, \textsf{disc}$_{\mathrm{val}}$, \textsf{gen}$_{\mathrm{train}}$ , \textsf{gen}$_{\mathrm{val}}$};
+\end{axis}
+\node[] at (-0.05\linewidth,-0.1\linewidth) {\footnotesize \textbf{(a)}};
+\end{tikzpicture}%

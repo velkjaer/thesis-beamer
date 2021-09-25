@@ -1,0 +1,1055 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               Newcommands              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\colheading}[2]{
+{\color{#1}
+    \rule{\linewidth}{4pt}}
+            #2 \hfill
+{\color{#1}
+    \rule{\linewidth}{4pt}}
+    \vspace{-0.4cm}
+}
+
+
+% TiKz relevant
+\SetKw{KwBy}{by}
+
+\tikzset{
+            dot/.style = {circle, fill, minimum size=#1,
+                      inner sep=0pt, outer sep=0pt},
+            dot/.default = 4pt % size of the circle diameter 
+}
+
+\pgfdeclarelayer{-1}
+\pgfsetlayers{-1,main}
+\tikzset{zlevel/.style={%
+        execute at begin scope={\pgfonlayer{#1}},
+        execute at end scope={\endpgfonlayer}
+}}
+
+
+\newcommand{\BERTbase}{$\mathrm{BERT}_{\mathrm{base}}$}
+\newcommand{\BERTlarge}{$\mathrm{BERT}_{\mathrm{large}}$}
+
+\newcommand{\dggr}{$^\dagger$}
+
+
+\newcommand{\sfit}[1]{\textit{\textsf{"#1"}}}
+
+\DeclareRobustCommand{\drawlinecircle}[1]{\tikz[]{\draw[fill=#1,draw=#1] (-6pt,0) -- (6pt,0) (0,0) circle (2pt);}}
+
+\DeclareRobustCommand{\drawlinesquare}[1]{\tikz[]{\draw[fill=#1,draw=#1] (-6pt,0) -- (6pt,0); \node[fill=#1, draw=#1, rectangle, minimum width=.75pt, minimum height=.75pt] (0,0) {};}}
+
+\DeclareRobustCommand{\drawshape}[2]{\tikz[]{\draw[fill=#2,draw=#2] (0,0) #1 (2pt);}}
+
+\DeclareRobustCommand{\karbox}[1]{\tikz[]{\node[anchor=south,inner sep=0pt,minimum width=0.4cm, minimum height=0.4cm ,outer sep=0pt,rounded corners=2pt,fill=black!10,draw=black!70] at (0,0) {#1};}
+}
+\DeclareRobustCommand{\ckarbox}[1]{\tikz[]{\node[anchor=south,inner sep=0pt,minimum width=0.25cm, minimum height=0.25cm ,outer sep=0pt,rounded corners=2pt,fill=black!10,draw=black!70] at (0,0) {\footnotesize #1};}
+}
+
+\DeclareRobustCommand{\ccolbox}[1]{\tikz[]{\node[anchor=south,inner sep=0pt,minimum width=0.20cm, minimum height=0.20cm ,outer sep=0pt,rounded corners=2pt,fill=#1,draw=#1] at (0,0) {};}
+}
+
+
+
+\DeclareRobustCommand{\zxbox}[1]{\tikz[]{\node[anchor=south,inner sep=0pt,minimum width=0.4cm, minimum height=0.4cm ,outer sep=0pt,rounded corners=2pt,fill=DTU_bright_red,draw=white] at (0,0) {#1};}
+}
+
+\DeclareRobustCommand{\stepbox}[2]{\tikz[]{\node[anchor=south,inner sep=0pt,minimum width=0.4cm, minimum height=0.4cm ,outer sep=0pt,rounded corners=2pt,fill=#1!20,draw=#1] at (0,0) {\textsc{#2}};}
+}
+
+\DeclareRobustCommand{\kbil}{\tikz[baseline]{\node at (0,0) {\includegraphics[width=0.7cm]{figs/knowbert.png}};}}
+
+\newcommand{\placeholder}[3]{
+\tikzset{placeholder/.style={rectangle, minimum width=#1\textwidth, minimum height=#2cm}}
+\begin{tikzpicture}
+    \node[placeholder] at (0,0) {#3};
+\end{tikzpicture}
+}
+
+\newcommand{\Ckobe}{$\mathcal{C}_{\mathrm{example}}$}
+\newcommand{\ttbf}[1]{\texttt{\textbf{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% QUOTATION LAYOUT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Syntax::: \begin{shadedquote}[author position: l, c, r]{author name} .... text .... \end{shadedquote}
+\newcommand*\quotesize{30} % if quote size changes, need a way to make shifts relative
+% Make commands for the quotes
+\newcommand*{\openquote}
+   {\tikz[remember picture,overlay,xshift=-4ex,yshift=-0.2ex]
+   \node (OQ) {\fontsize{\quotesize}{\quotesize}\selectfont``};\kern0pt}
+
+\newcommand*{\closequote}[1]
+  {\tikz[remember picture,overlay,xshift=4ex,yshift={#1}]
+   \node (CQ) {\fontsize{\quotesize}{\quotesize}\selectfont''};}
+
+% select a colour for the shading
+\colorlet{shadecolor}{black!5}
+
+\newcommand*\shadedauthorformat{\emph} % define format for the author argument
+
+% Now a command to allow left, right and centre alignment of the author
+\newcommand*\authoralign[1]{%
+  \if#1l
+    \def\authorfill{}\def\quotefill{\hfill}
+  \else
+    \if#1r
+      \def\authorfill{\hfill}\def\quotefill{}
+    \else
+      \if#1c
+        \gdef\authorfill{\hfill}\def\quotefill{\hfill}
+      \else\typeout{Invalid option}
+      \fi
+    \fi
+  \fi}
+% wrap everything in its own environment which takes one argument (author) and one optional argument
+% specifying the alignment [l, r or c]
+%
+
+
+
+\newenvironment{shadequote}[2][l]%
+{\authoralign{#1}
+\ifblank{#2}
+   {\def\shadequoteauthor{}\def\yshift{-2ex}\def\quotefill{\hfill}}
+   {\def\shadequoteauthor{\par\authorfill\shadedauthorformat{#2}}\def\yshift{2ex}}
+\begin{snugshade}
+\begin{quote}\openquote}
+{\shadequoteauthor\quotefill\closequote{\yshift}
+\end{quote}
+\end{snugshade}}
+
+\newcommand{\ADDCITE}{\textcolor{DTU_red}{[\textbf{ADD CITATION!}]}}
+
+\colorlet{softOrange}{white!30!orange}
+\colorlet{softBlue}{white!30!blue}
+\colorlet{softPurple}{white!60!purple}
+\colorlet{softMagenta}{white!30!magenta}
+\colorlet{softGreen}{white!40!green}
+% utility functions
+
+\newcommand{\fillMatrix}[5]{
+\coordinate (a) at (#1, #2);
+\coordinate (b) at (#3, #4);
+        
+        \draw[step=0.5cm, fill=#5] (a) rectangle (b);
+        \draw[step=0.5cm, shift={(a)}, fill=#5] (0,0) grid (b);
+}
+
+\newcommand{\drawMatrix}[5]{
+\coordinate (a) at (#1, #2);
+\coordinate (b) at (#3, #4);
+        
+        \draw[step=0.5cm, thick, #5 ,fill=white!80!black] (a) rectangle (b);
+        \draw[step=0.5cm, thick, shift={(a)}, #5, fill=white!80!black] (0,0) grid (b);
+}
+
+
+
+\newcommand{\colbf}[1]{\textcolor{DTU_red}{\textbf{#1}}}
+\newcommand{\colbff}[1]{\textcolor{DTU_green}{\textbf{#1}}}
+
+% PLOTTING FUNCTIONS
+\usepackage{booktabs}
+\newcommand{\thline}{\Xhline{2.5\arrayrulewidth}}
+\newcommand{\knowbert}{\tikz[baseline]{\node at (0,0) {\includegraphics[width=1cm]{graphics/auxillary/knowbert.png}};}}
+\newcommand{\kglm}{\tikz[baseline]{\node at (0,0) {\includegraphics[width=0.7cm]{figs/wiki_logo.png}};}}
+
+% \newcommand{\KARPLOT}[1]{
+% \begin{figure}[t!]
+% \begin{minipage}{0.40\textwidth}
+%     \includegraphics[width=\textwidth]{graphics/kb/into_the_guts_of_kar/heatmap_wiki_#1.eps}
+%     \includegraphics[width=\textwidth]{graphics/kb/into_the_guts_of_kar/heatmap_wordnet_#1.eps}
+% \end{minipage}
+% \begin{minipage}{0.30\textwidth}
+%     \includegraphics[width=\textwidth]{graphics/kb/into_the_guts_of_kar/prior_plot_wiki_#1.eps}
+%     \includegraphics[width=\textwidth]{graphics/kb/into_the_guts_of_kar/prior_plot_wordnet_#1.eps}
+    
+% \end{minipage}
+% \begin{minipage}{0.30\textwidth}
+%     \includegraphics[width=\textwidth]{graphics/kb/into_the_guts_of_kar/link_score_plot_wiki_#1.eps}
+%     \includegraphics[width=\textwidth]{graphics/kb/into_the_guts_of_kar/link_score_plot_wordnet_#1.eps}
+% \end{minipage}
+% \end{figure}
+% }
+
+\newcommand{\KARPLOT}[1]{
+\vspace{-0.6cm}
+\begin{columns}
+\begin{column}[T]{0.5\textwidth}
+   \begin{figure}
+       \centering
+       \includegraphics[height=0.5\textheight]{graphics/kb/into_the_guts_of_kar/heatmap_wiki_#1.eps}
+    \end{figure}
+    \vspace{-0.75cm}
+    \begin{figure}
+       \centering
+       \includegraphics[height=0.5\textheight]{graphics/kb/into_the_guts_of_kar/heatmap_wordnet_#1.eps}
+   \end{figure}
+\end{column}
+\begin{column}[T]{0.5\textwidth}
+\begin{figure}
+    \centering
+    \includegraphics[height=0.25\textheight]{graphics/kb/into_the_guts_of_kar/prior_plot_wiki_#1.eps}
+\end{figure}
+\vspace{-0.75cm}
+\begin{figure}
+    \centering
+    \includegraphics[height=0.25\textheight]{graphics/kb/into_the_guts_of_kar/link_score_plot_wiki_#1.eps}
+\end{figure}
+\vspace{-0.75cm}
+\begin{figure}
+    \centering
+    \includegraphics[height=0.25\textheight]{graphics/kb/into_the_guts_of_kar/prior_plot_wordnet_#1.eps}
+\end{figure}
+\vspace{-0.75cm}
+\begin{figure}
+    \centering
+    \includegraphics[height=0.25\textheight]{graphics/kb/into_the_guts_of_kar/link_score_plot_wordnet_#1.eps}
+\end{figure}
+\end{column}
+\end{columns}
+% \begin{minipage}{0.49\textwidth}
+%     \includegraphics[width=\textwidth]{graphics/kb/into_the_guts_of_kar/prior_plot_wiki_#1.eps}
+    
+%     \includegraphics[width=\textwidth]{graphics/kb/into_the_guts_of_kar/prior_plot_wordnet_#1.eps}
+%     \includegraphics[width=\textwidth]{graphics/kb/into_the_guts_of_kar/link_score_plot_wordnet_#1.eps}
+
+% \end{minipage}
+}
+
+\newcommand{\pd}[1]{\partial_{#1}}
+\newcommand{\pdfrac}[2]{\dfrac{\partial #1}{\partial #2}}
+\usepackage{bm}
+
+\usetikzlibrary{positioning, fit, arrows.meta, shapes}
+
+% used to avoid putting the same thing several times...
+% Command \empt{var1}{var2}
+\newcommand{\empt}[2]{$#1^{\qty( #2 )}$}
+
+\newcommand{\expt}[2]{#1^{\qty( #2 )}}
+
+% SMART COMMANDS FOR THIS PROJECT
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+\newcommand{\Lnorm}[1]{$L_{#1}$-norm}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\bsw}{\boldsymbol{w}}
+\newcommand{\cov}{\mathrm{c\hat{o}v}}
+\newcommand{\covm}{\boldsymbol{\Sigma}}
+\newcommand{\curlyb}[1]{\left\{ {#1} \right\}}
+\newcommand{\Egeneral}{E_{\mathcal{M}}^{\mathrm{gen}}}
+\newcommand{\Dtrain}{\mathcal{D}_{\mathrm{train}}}
+\newcommand{\Dtest}{\mathcal{D}_{\mathrm{test}}}
+\newcommand{\EM}[1]{\hat{E}_{\mathcal{M}}^{\mathrm{#1}}}
+\newcommand{\EMss}[2]{E_{{\mathcal{M}#1}}^{{\mathrm{#2}}}}
+\newcommand{\FM}[1]{f_{\mathcal{M}}\qty(#1)}
+\newcommand{\calDss}[2]{\mathcal{D}_{{#1}}^{{\mathrm{#2}}}}
+\newcommand{\RMSE}{\mathrm{RMSE}}
+\newcommand{\expe}[1]{\mathrm{e}^{{#1}}}
+\newcommand{\DSII}{\textsc{DS}_{\mathit{II}}}
+\newcommand{\BST}{\boldsymbol{\theta}}
+\newcommand{\nw}[3]{\www_{#2,#3}^{\qty(#1)}}
+\newcommand{\NW}[1]{\WWW^{\qty(#1)}}
+
+% LOSS FUNCTIONS
+\newcommand{\Lel}{\mathcal{L}_{\mathrm{EL}}}
+
+% KNOWLEDGE GRAPH RELATED DEFINITIONS
+\newcommand{\Ents}{\boldsymbol{\mathcal{E}}}
+\newcommand{\LEnts}{\boldsymbol{\mathcal{E}}_{<t}}
+\newcommand{\Rels}{\boldsymbol{\mathcal{R}}}
+\newcommand{\KG}{\mathcal{KG}}
+\newcommand{\LKG}{\mathcal{KG}_1^{t-1}}
+
+% references 
+\renewcommand{\eqref}[1]{Eq.~(\ref{#1})}
+\newcommand{\cstar}{c^{\ast}}
+% NEW THEOREM ENVIRONMENT: Exercise
+% \newtheorem{exercise}{Exercise}[chapter]
+% \newtheorem{solution}{Solution}[chapter]
+%
+
+% SPACINGS
+\newcommand{\linie}{\underline{\makebox[\textwidth]{}}}
+\newcommand{\spacer}{\rule[-2mm]{0mm}{6mm}}
+\newcommand{\notop}{{{}_{}}}
+\newcommand{\ontop}[1]{{{#1}_{}}}
+%
+% LITERAL ABBREVIATIONS
+\newcommand{\ie}{i.e.}
+\newcommand{\eg}{e.g.}
+\newcommand{\etc}{\textit{etc.}}
+\newcommand{\etal}{\textit{et~al.}}
+\newcommand{\MICDTU}{DTU Nanotech}
+%
+% MATH SYMBOLS
+\renewcommand{\vec}[1]{\bm{#1}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\dm}{\mathrm{d}}
+\newcommand{\sgn}{\mathrm{sgn}}
+\newcommand{\sm}{\!-\!}
+\newcommand{\sP}{\!+\!}
+\newcommand{\im}{\mathrm{Im}}
+\newcommand{\re}{\mathrm{Re}}
+\newcommand{\krondel}[2]{\delta^\notop_{#1 #2}}
+\newcommand{\ion}{\ii\omega^\notop_n}
+\newcommand{\iot}{\ii\omega t}
+\newcommand{\taun}{\tau^\notop}
+\newcommand{\lam}{\lambda}
+\newcommand{\lamn}{\lambda^{{}}}
+\newcommand{\limit}[2]{\mathop{\longrightarrow}_{#1 \rightarrow #2}}
+\newcommand{\gamn}{\gamma^{{}}}
+\newcommand{\nun}{\nu^\notop}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\ven}{\ve^\notop}
+\newcommand{\xin}{\xi^\notop}
+\newcommand{\zetan}{\zeta^\notop}
+\newcommand{\pp}{\partial^{{}}}
+\newcommand{\ppsqr}{\partial^{\,2_{}}}
+\newcommand{\nablabf}{\boldsymbol{\nabla}}
+\newcommand{\nablabfn}{\boldsymbol{\nabla}^\notop}
+\newcommand{\Lapl}{\nabla^2}
+\newcommand{\nablasqr}{\nabla^2}
+\newcommand{\rot}{\nablabf\times}
+\newcommand{\divop}{\nablabf\scap}
+%
+% MATH STYLE
+\newcommand{\scap}{\!\cdot\!}
+\newcommand{\intd}[1]{{\int\!\dm#1\: }}
+\newcommand{\inttau}[1]{{\int_0^\beta\!d\tauno_{#1}\: }}
+\newcommand{\dpst}{\displaystyle}
+\newcommand{\scst}{\scriptstyle}
+\newcommand{\scscst}{\scriptscriptstyle}
+\newcommand{\fracsmall}[2]{\mbox{$\frac{#1}{#2}$}}
+\newcommand{\sqrtsmall}[1]{\mbox{$\sqrt{#1}$}}
+\newcommand{\half}{\fracsmall{1}{2}}
+\newcommand{\third}{\fracsmall{1}{3}}
+\newcommand{\quarter}{\fracsmall{1}{4}}
+%
+% BOLD SYMBOLS
+\newcommand{\AAA}{\vec{A}}
+\newcommand{\AAn}{\vec{A}^\notop}
+\newcommand{\Ann}{A^\notop}
+\newcommand{\aaa}{\vec{a}}
+\newcommand{\aan}{\vec{a}^\notop}
+\newcommand{\ann}{a^\notop}
+\newcommand{\asqr}{a^{2_{}}}
+\newcommand{\BBB}{\vec{B}}
+\newcommand{\BBn}{\vec{B}^\notop}
+\newcommand{\Bnn}{B^\notop}
+\newcommand{\bbb}{\vec{b}}
+\newcommand{\bbn}{\vec{b}^\notop}
+\newcommand{\bnn}{b^\notop}
+\newcommand{\bsqr}{b^{2_{}}}
+\newcommand{\CCC}{\vec{C}}
+\newcommand{\CCn}{\vec{C}^\notop}
+\newcommand{\CD}{C^\notop_\mathrm{D}}
+\newcommand{\Cs}{C^\notop_\mathrm{s}}
+\newcommand{\ccc}{\vec{c}}
+\newcommand{\ccn}{\vec{c}^\notop}
+\newcommand{\cnn}{c^\notop}
+\newcommand{\DDD}{\vec{D}}
+\newcommand{\DDn}{\vec{D^\notop}}
+\newcommand{\ddd}{\vec{d}}
+\newcommand{\ddn}{\vec{d^\notop}}
+\newcommand{\EEE}{\vec{E}}
+\newcommand{\EEn}{\vec{E^\notop}}
+\newcommand{\Enn}{E^\notop}
+\newcommand{\eee}{\vec{e}}
+\newcommand{\een}{\vec{e}^\notop}
+\newcommand{\FFF}{\vec{F}}
+\newcommand{\FFn}{\vec{F}^\notop}
+\newcommand{\Fnn}{F^\notop}
+\newcommand{\FFFe}{\vec{F}^\notop_\mathrm{el}}
+\newcommand{\fff}{\vec{f}}
+\newcommand{\ffn}{\vec{f}^\notop}
+\newcommand{\fnn}{f^\notop}
+\newcommand{\fffe}{\vec{f}^\notop_\mathrm{el}}
+\newcommand{\GGn}{\vec{G}}
+\newcommand{\GGG}{\vec{G}^\notop}
+\newcommand{\ggn}{\vec{g}^\notop}
+\newcommand{\gnn}{g^\notop}
+\newcommand{\hhh}{\vec{h}}
+\newcommand{\hhht}[1]{\vec{h}^{(#1)}}
+\newcommand{\HHH}{\vec{H}}
+\newcommand{\HHn}{\vec{H}^\notop}
+\newcommand{\iii}{\vec{i}}
+\newcommand{\iin}{\vec{i}^\notop}
+\newcommand{\JJJ}{\vec{J}}
+\newcommand{\jjj}{\vec{j}}
+\newcommand{\JJn}{\vec{J}^\notop}
+\newcommand{\Jnn}{J^\notop}
+\newcommand{\JJJe}{\vec{J}^\notop_\mathrm{el}}
+\newcommand{\JJJti}{\vec{\tilde{J}}}
+\newcommand{\JJnti}{\vec{\tilde{J}}^\notop}
+\newcommand{\JJdiff}{\vec{J}^{\mathrm{diff}_{}}}
+\newcommand{\Jdiff}{J^{\mathrm{diff}_{}}}
+\newcommand{\JJext}{\vec{J}^{{}}_{\mathrm{ext}}}
+\newcommand{\JJmag}{\vec{J}^{{}}_{\mathrm{mag}}}
+\newcommand{\JJheat}{\vec{J}^{{}}_{\mathrm{heat}}}
+\newcommand{\Jheat}{J^{{}}_{\:\mathrm{heat}}}
+\newcommand{\JJhcond}{\vec{J}^\mathrm{cond}_\mathrm{heat}}
+\newcommand{\Jhcond}{J^{\:\mathrm{cond}}_{\:\:\mathrm{heat}}}
+\newcommand{\JJhconv}{\vec{J}^\mathrm{conv}_\mathrm{heat}}
+\newcommand{\Jhconv}{J^{\:\mathrm{conv}}_{\:\:\mathrm{heat}}}
+\newcommand{\kkk}{\vec{k}}
+\newcommand{\kkn}{\vec{k}^\notop}
+\newcommand{\knn}{k^\notop}
+\newcommand{\ksqr}{k^{2_{}}}
+\newcommand{\KKK}{\vec{K}}
+\newcommand{\KKn}{\vec{K}^\notop}
+\newcommand{\MMM}{\vec{M}}
+\newcommand{\MMn}{\vec{M}^\notop}
+\newcommand{\mmm}{\vec{m}}
+\newcommand{\mmn}{\vec{m}^\notop}
+\newcommand{\nnn}{\vec{n}}
+\newcommand{\nnnn}{\vec{n}^\notop}
+\newcommand{\ooo}{\vec{o}}
+\newcommand{\PPP}{\vec{P}}
+\newcommand{\PPn}{\vec{P}^\notop}
+\newcommand{\ppp}{\vec{p}}
+\newcommand{\ppn}{\vec{p}^\notop}
+\newcommand{\pnn}{p^\notop}
+\newcommand{\QQQ}{\vec{Q}}
+\newcommand{\QQn}{\vec{Q}^\notop}
+\newcommand{\Qnn}{Q^\notop}
+\newcommand{\qqq}{\vec{q}}
+\newcommand{\qqn}{\qqq^\notop}
+\newcommand{\RRR}{\vec{R}}
+\newcommand{\RRn}{\RRR^\notop}
+\newcommand{\Rnn}{R^\notop}
+\newcommand{\rrr}{\vec{r}}
+\newcommand{\rrn}{\rrr^\notop}
+\newcommand{\rij}{r^\notop_{ij}}
+\newcommand{\sss}{\vec{s}}
+\newcommand{\SSS}{\vec{S}}
+\newcommand{\ssn}{\sss^\notop}
+\newcommand{\snn}{s^\notop}
+\newcommand{\ssqr}{s^{2_{}}}
+\newcommand{\Tnn}{{T}^\notop}
+\newcommand{\UUU}{\vec{U}}
+\newcommand{\uuu}{\vec{u}}
+\newcommand{\uun}{\vec{u}^\notop}
+\newcommand{\unn}{{u}^\notop}
+\newcommand{\VVV}{\vec{V}}
+\newcommand{\VVn}{\vec{V}^\notop}
+\newcommand{\Vnn}{{V}^\notop}
+\newcommand{\VLJ}{{V}^\notop_\mathrm{LJ}}
+\newcommand{\vvv}{\vec{v}}
+\newcommand{\vvn}{\vec{v}^\notop}
+\newcommand{\vnn}{{v}^\notop}
+\newcommand{\www}{\vec{w}}
+\newcommand{\WWW}{\vec{W}}
+\newcommand{\wwn}{\vec{w}^\notop}
+\newcommand{\wnn}{{w}^\notop}
+\newcommand{\wdd}{w^{{}}_\mathrm{d}}
+\newcommand{\xxx}{\vec{x}}
+\newcommand{\xxxt}[1]{\xxx^{\qty(#1)}}
+\newcommand{\xxn}{\xxx^\notop}
+\newcommand{\XXX}{\vec{X}}
+\newcommand{\xnn}{x^\notop}
+\newcommand{\yyy}{\vec{y}}
+\newcommand{\Znn}{Z^\notop}
+\newcommand{\znn}{z^\notop}
+\newcommand{\zerovec}{\boldsymbol{0}}
+\newcommand{\zzz}{\vec{z}}
+\newcommand{\ZZZ}{\vec{Z}}
+%
+% PHYSICS SYMBOLS
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calCn}{\mathcal{C}^{{}}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calDn}{\mathcal{D}^{{}}}
+\newcommand{\calO}{\mathcal{O}}
+\newcommand{\calP}{\mathcal{P}}
+\newcommand{\calPO}{\mathcal{P}^{{}}_0}
+\newcommand{\calPs}{\mathcal{P}^{{}}_\mathrm{s}}
+\newcommand{\calPf}{\mathcal{P}^{{}}_\mathrm{f}}
+\newcommand{\calR}{\mathcal{R}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calV}{\mathcal{V}}
+\newcommand{\area}{\mathcal{A}}
+\newcommand{\aI}{{a^{{}}_1}}
+\newcommand{\aIsqr}{{a^{2_{}}_1}}
+\newcommand{\aIcub}{{a^{3_{}}_1}}
+\newcommand{\aII}{{a^{{}}_2}}
+\newcommand{\aIIsqr}{{a^{2_{}}_2}}
+\newcommand{\aIIcub}{{a^{3_{}}_2}}
+\newcommand{\aB}{{a^\notop_0}}
+\newcommand{\ath}{{a^\notop_\mathrm{th}}}
+\newcommand{\ap}{{a^\notop_\mathrm{p}}}
+\newcommand{\aexp}{{a^\notop_\mathrm{exp}}}
+\newcommand{\alphap}{\alpha^{{}}_\mathrm{p}}
+\newcommand{\aeta}{{\alpha^\notop_\eta}}
+\newcommand{\akap}{{\alpha^\notop_\kappa}}
+\newcommand{\arho}{{\alpha^\notop_\rho}}
+\newcommand{\aetasqr}{{\alpha^{2_{}}_\eta}}
+\newcommand{\akapsqr}{{\alpha^{2_{}}_\kappa}}
+\newcommand{\arhosqr}{{\alpha^{2_{}}_\rho}}
+\newcommand{\BO}{\textit{Bo}}
+\newcommand{\CCD}{C^{{}}_\mathrm{D}}
+\newcommand{\Chyd}{C^{{}}_\mathrm{hyd}}
+\newcommand{\CA}{\textit{Ca}}
+\newcommand{\CCa}{C^{{}}_\alpha}
+\newcommand{\cca}{c^{{}}_\alpha}
+\newcommand{\ca}{c^{{}}_\mathrm{a}}
+\newcommand{\casqr}{c^{2_{}}_\mathrm{a}}
+\newcommand{\cm}{c^{{}}_\mathrm{m}}
+\newcommand{\cmO}{c^{(0)_{}}_\mathrm{m}}
+\newcommand{\cmI}{c^{(1)_{}}_\mathrm{m}}
+\newcommand{\cmII}{c^{(2)_{}}_\mathrm{m}}
+\newcommand{\cmi}{c^{(i)_{}}_\mathrm{m}}
+\newcommand{\co}{c^{{}}_\mathrm{o}}
+
+\newcommand{\cpm}{c^{{}}_\pm}
+\newcommand{\cpp}{c^{{}}_+}
+\newcommand{\cmm}{c^{{}}_-}
+\newcommand{\Cth}{C^\notop_\mathrm{th}}
+\newcommand{\dktwopicubed}{\frac{d\kkk}{\twopicubed}}
+\newcommand{\Deln}{\Delta^\notop}
+\newcommand{\Dth}{D^\notop_\mathrm{th}}
+\newcommand{\Ekin}{E^{{}}_\mathrm{kin}}
+\newcommand{\Etot}{E_\mathrm{tot}}
+\newcommand{\ffe}{\fff^{{}}_\mathrm{el}}
+\newcommand{\FC}{\mathcal{F}}
+\newcommand{\FFFdip}{\FFF^{{}}_\mathrm{dip}}
+\newcommand{\FFFDEP}{\FFF^{{}}_\mathrm{DEP}}
+\newcommand{\FFFdrag}{\FFF^{{}}_\mathrm{drag}}
+\newcommand{\Fimp}{F^{{}}_\mathrm{imp}}
+\newcommand{\GC}{G}
+\newcommand{\GCn}{G^{{}}}
+\newcommand{\Ghyd}{G^{{}}_\mathrm{hyd}}
+\newcommand{\hc}{h^{{}}_\mathrm{c}}
+\newcommand{\hf}{h^{{}}_\mathrm{f}}
+\newcommand{\Dh}{\Delta h}
+\newcommand{\IO}{I^{{}}_0}
+\newcommand{\Is}{I^{{}}_\mathrm{s}}
+\newcommand{\Ith}{I^\notop_\mathrm{th}}
+\newcommand{\Ieo}{I^\notop_\mathrm{eo}}
+\newcommand{\Ieocond}{I^{\textrm{cond}_{}}_\mathrm{eo}}
+\newcommand{\Ieoconv}{I^{\textrm{conv}_{}}_\mathrm{eo}}
+\newcommand{\Ipconv}{I^{\textrm{conv}_{}}_\mathrm{p}}
+\newcommand{\kB}{{k^\notop_\mathrm{B}}}
+\newcommand{\kBT}{{k^\notop_\mathrm{B} T}}
+\newcommand{\Lc}{L^{{}}_\mathrm{c}}
+\newcommand{\Lx}{L^{{}}_x}
+\newcommand{\Ly}{L^{{}}_y}
+\newcommand{\Lz}{L^{{}}_z}
+\newcommand{\elln}{\ell^\notop}
+\newcommand{\elli}{{\ell^{{}}_\mathrm{i}}}
+\newcommand{\ello}{{\ell^{{}}_\mathrm{o}}}
+\newcommand{\elld}{{\ell^{{}}_\mathrm{d}}}
+\newcommand{\ellc}{\ell^{{}}_\mathrm{c}}
+\newcommand{\lcap}{\ell^{{}}_\mathrm{cap}}
+\newcommand{\lcapsqr}{\ell^{2_{}}_\mathrm{cap}}
+\newcommand{\len}{\mathcal{L}}
+\newcommand{\nre}{n^{{}}_\mathrm{re}}
+\newcommand{\nim}{n^{{}}_\mathrm{im}}
+\newcommand{\nnp}{n^{+_{}}}
+\newcommand{\nnm}{n^{-_{}}}
+\newcommand{\npm}{n^{\pm_{}}}
+\newcommand{\nin}{n^\notop_\mathrm{in}}
+\newcommand{\nout}{n^\notop_\mathrm{out}}
+\newcommand{\Ps}{P^{{}}_\mathrm{s}}
+\newcommand{\pc}{{p^{{}}_\mathrm{c}}}
+\newcommand{\peo}{p^\notop_\mathrm{eo}}
+\newcommand{\phs}{p^{{}}_\mathrm{hs}}
+\newcommand{\ptot}{p^{{}}_\mathrm{tot}}
+\newcommand{\pimp}{p^{{}}_\mathrm{imp}}
+\newcommand{\pL}{{p^{{}}_\mathrm{L}}}
+\newcommand{\pR}{{p^{{}}_\mathrm{R}}}
+\newcommand{\pii}{{p^{{}}_{\,\mathrm{i}}}}
+\newcommand{\piiI}{{p^{{}}_{\,\mathrm{i},1}}}
+\newcommand{\piiII}{{p^{{}}_{\,\mathrm{i},2}}}
+\newcommand{\poo}{{p^{{}}_\mathrm{o}}}
+\newcommand{\pdd}{{p^{{}}_\mathrm{d}}}
+\newcommand{\pww}{{p^{{}}_\mathrm{w}}}
+\newcommand{\Dp}{\Delta p}
+\newcommand{\Dpn}{\Delta p^{{}}}
+\newcommand{\dpb}{\Delta p^{{}}_\mathrm{b}}
+\newcommand{\Dpb}{\Delta p^{{}}_\mathrm{b}}
+\newcommand{\pclog}{p^{{}}_\mathrm{clog}}
+\newcommand{\Dpsurf}{\Delta p^{{}}_\mathrm{surf}}
+\newcommand{\DPsurf}{\Delta p^{{}}_\mathrm{surf}}
+\newcommand{\DP}{\Delta P}
+\newcommand{\Peth}{\PE^{{}}_\mathrm{th}}
+\newcommand{\PE}{\textit{P\'e}}
+\newcommand{\Qc}{Q^{{}}_\mathrm{c}}
+\newcommand{\Qcav}{Q^\notop_\mathrm{c}}
+\newcommand{\Qeo}{Q^\notop_\mathrm{eo}}
+\newcommand{\QeoS}{Q^{*_{}}_\mathrm{eo}}
+\newcommand{\Qexp}{Q^\notop_\mathrm{exp}}
+\newcommand{\Qmass}{Q^\notop_\mathrm{mass}}
+\newcommand{\QmassO}{Q^\notop_{\textrm{mass},0}}
+\newcommand{\Qtot}{Q^\notop_\mathrm{tot}}
+\newcommand{\Qp}{Q^\notop_\mathrm{p}}
+\newcommand{\Qii}{{Q^{{}}_\mathrm{i}}}
+\newcommand{\Qoo}{{Q^{{}}_\mathrm{o}}}
+\newcommand{\Qdd}{{Q^{{}}_\mathrm{d}}}
+\newcommand{\Qth}{Q^\notop_\mathrm{th}}
+\newcommand{\QthS}{Q^{*_{}}_\mathrm{th}}
+\newcommand{\RE}{\textit{Re}}
+\newcommand{\RcI}{R^{\mathrm{c}_{}}_1}
+\newcommand{\RcII}{R^{\mathrm{c}_{}}_2}
+\newcommand{\Rh}{R^{{}}_\mathrm{hyd}}
+\newcommand{\RhS}{R^{*_{}}_\mathrm{hyd}}
+\newcommand{\Rhyd}{R^{{}}_\mathrm{hyd}}
+\newcommand{\RhydS}{R^{*_{}}_\mathrm{hyd}}
+\newcommand{\Rhydp}{R^{\textrm{p}_{}}_\mathrm{hyd}}
+\newcommand{\Rhydexp}{R^{\textrm{exp}_{}}_\mathrm{hyd}}
+\newcommand{\Rth}{R^\notop_\mathrm{th}}
+\newcommand{\DS}{\Delta S}
+\newcommand{\Tg}{T^{{}}_\mathrm{g}}
+\newcommand{\Tc}{T^{{}}_\mathrm{c}}
+\newcommand{\Dt}{\Delta t}
+\newcommand{\DT}{\Delta T}
+\newcommand{\tacc}{\tau^{{}}_\mathrm{acc}}
+\newcommand{\tadv}{\tau^{{}}_\mathrm{adv}}
+\newcommand{\tcap}{\tau^{{}}_\mathrm{cap}}
+\newcommand{\timp}{\tau^{{}}_\mathrm{imp}}
+\newcommand{\tdiff}{\tau^{{}}_\mathrm{diff}}
+\newcommand{\tdiffa}{\tau^{\textrm{ax}_{}}_\mathrm{diff}}
+\newcommand{\tdiffr}{\tau^{\textrm{rad}_{}}_\mathrm{diff}}
+\newcommand{\tconv}{\tau^{{}}_\mathrm{conv}}
+\newcommand{\tconva}{\tau^{{L^{{}}_{}}}_\mathrm{conv}}
+\newcommand{\tconvr}{\tau^{{a^{{}}_{}}}_\mathrm{conv}}
+\newcommand{\tRC}{\tau^{{}}_{RC}}
+\newcommand{\vol}{\mathcal{V}}
+\newcommand{\vg}{\vnn_\mathrm{g}}
+\newcommand{\veo}{\vnn_\mathrm{eo}}
+\newcommand{\vvvwall}{\vvn_\mathrm{wall}}
+\newcommand{\DV}{\Delta V}
+\newcommand{\xc}{{x^{{}}_\mathrm{c}}}
+\newcommand{\xcm}{{x^{{}}_\mathrm{cm}}}
+\newcommand{\xL}{{x^{{}}_\mathrm{L}}}
+\newcommand{\xR}{{x^{{}}_\mathrm{R}}}
+\newcommand{\Dx}{\Delta x}
+\newcommand{\Dy}{\Delta y}
+\newcommand{\Dz}{\Delta z}
+\newcommand{\zc}{{z^{{}}_\mathrm{c}}}
+\newcommand{\deltan}{\delta^\notop}
+\newcommand{\eps}{\epsilon}
+\newcommand{\epsn}{\epsilon^{{}}}
+\newcommand{\epss}{\epsilon^\notop_\mathrm{s}}
+\newcommand{\epsO}{\epsilon^\notop_0}
+\newcommand{\epsI}{\epsilon^\notop_1}
+\newcommand{\epsII}{\epsilon^\notop_2}
+\newcommand{\epsr}{\epsilon^\notop_\mathrm{r}}
+\newcommand{\etan}{\eta^{{}}}
+\newcommand{\etaeff}{\eta^{{}}_\mathrm{eff}}
+\newcommand{\etaO}{\eta^{{}}_0}
+\newcommand{\etap}{\eta^{\prime_{}}_0}
+\newcommand{\etaS}{\eta^*}
+\newcommand{\gamD}{\dot{\gamma}}
+\newcommand{\gamDn}{\dot{\gamma}^{{}}}
+\newcommand{\gamS}{\gamma^{*_{}}}
+\newcommand{\gsl}{\gamma_\mathrm{sl}}
+\newcommand{\gsg}{\gamma_\mathrm{sg}}
+\newcommand{\glg}{\gamma_\mathrm{lg}}
+\newcommand{\bfGamma}{\mbox{$\Gamma$\hspace*{-0.6em}$\Gamma$}}
+\newcommand{\lamO}{\lambda^{{}}_0}
+\newcommand{\lamnn}{\lambda^{{}}_n}
+\newcommand{\lamnN}{\lambda^{(N)_{}}_n}
+\newcommand{\lamD}{\lambda^{{}}_\mathrm{D}}
+\newcommand{\lamDsqr}{\lambda^{{2}}_\mathrm{D}}
+\newcommand{\lams}{\lambda^{{}}_\mathrm{s}}
+\newcommand{\lamp}{\lambda^{{}}_+}
+\newcommand{\lamppp}{\lambda^{\prime\prime_{}}_+}
+\newcommand{\lampsqr}{\lambda^{2_{}}_+}
+\newcommand{\lampcub}{\lambda^{3_{}}_+}
+\newcommand{\lamm}{\lambda^{{}}_-}
+\newcommand{\lammpp}{\lambda^{\prime\prime_{}}_-}
+\newcommand{\lammsqr}{\lambda^{2_{}}_-}
+\newcommand{\lammcub}{\lambda^{3_{}}_-}
+\newcommand{\muO}{\mu^{{}}_0}
+\newcommand{\mur}{\mu^\notop_\mathrm{r}}
+\newcommand{\muion}{\mu^\notop_\mathrm{ion}}
+\newcommand{\mueo}{\mu^\notop_\mathrm{eo}}
+\newcommand{\oc}{{\omega^\notop_\mathrm{c}}}
+\newcommand{\on}{{\omega^\notop_n}}
+\newcommand{\ocsqr}{{\omega^{2_{}}_\mathrm{c}}}
+\newcommand{\oD}{{\omega^\notop_\mathrm{D}}}
+\newcommand{\phin}{\phi^{{}}}
+\newcommand{\phiS}{\phi^{*_{}}}
+\newcommand{\twopicubed}{(2\pi)^3}
+\newcommand{\rhoe}{\rho^\notop_\mathrm{el}}
+\newcommand{\rhon}{\rho^\notop}
+\newcommand{\sigmae}{\sigma^\notop_\mathrm{el}}
+\newcommand{\sigmaI}{\sigma^\notop_\mathrm{el,1}}
+\newcommand{\sigmaII}{\sigma^\notop_\mathrm{el,2}}
+\newcommand{\sigmaion}{\sigma^\notop_\mathrm{ion}}
+\newcommand{\sigmaionp}{\sigma^{+_{}}_\mathrm{ion}}
+\newcommand{\sigmaionm}{\sigma^{-_{}}_\mathrm{ion}}
+\newcommand{\sigmaionpm}{\sigma^{\pm_{}}_\mathrm{ion}}
+\newcommand{\sigman}{\sigma^\notop}
+\newcommand{\domegatwopi}{\frac{d\omega}{2\pi}}
+%
+% Symbols with a tilde
+\newcommand{\ctin}{{\tilde{c}^{{}}_n{}}}
+\newcommand{\hti}{\tilde{h}}
+\newcommand{\Lti}{{\tilde{L}^{{}}{}}}
+\newcommand{\pti}{{\tilde{p}^{{}}{}}}
+\newcommand{\ptiO}{\tilde{p}^{(0)_{}}}
+\newcommand{\ptiI}{\tilde{p}^{(1)_{}}}
+\newcommand{\ppti}{{\tilde{\partial}^{{}}{}}}
+\newcommand{\rti}{{\tilde{r}^{{}}{}}}
+\newcommand{\rrrti}{{\tilde{\rrr}^{{}}{}}}
+\newcommand{\tti}{{\tilde{t}^{{}}{}}}
+\newcommand{\ttiO}{\tilde{t}^{{}}_0}
+\newcommand{\uti}{{\tilde{u}^{{}}{}}}
+\newcommand{\utin}{{\tilde{u}^{{}}_n{}}}
+\newcommand{\utim}{{\tilde{u}^{{}}_m{}}}
+\newcommand{\vti}{{\tilde{v}^{{}}{}}}
+\newcommand{\vtiO}{\tilde{v}^{(0)_{}}}
+\newcommand{\vtiI}{\tilde{v}^{(1)_{}}}
+\newcommand{\vxti}{{\tilde{v}^{{}}_x{}}}
+\newcommand{\vvvti}{{\tilde{\vvv}^{{}}{}}}
+\newcommand{\xti}{{\tilde{x}^{{}}{}}}
+\newcommand{\xtiO}{\tilde{x}^{{}}_0}
+\newcommand{\xtiI}{\tilde{x}^{{}}_1}
+\newcommand{\yti}{{\tilde{y}^{{}}{}}}
+\newcommand{\zti}{{\tilde{z}^{{}}{}}}
+\newcommand{\phiti}{{\tilde{\phi}^{{}}{}}}
+\newcommand{\nablati}{{\tilde{\nablabf}^{{}}{}}}
+\newcommand{\XXXtilde}{\tilde{\vec{X}}}
+%
+% Symbols with a subscript 0, 1, or 2
+\newcommand{\CO}{C^{{}}_0}
+\newcommand{\cO}{c^{{}}_0}
+\newcommand{\cOsqr}{c^{\:2_{}}_0}
+\newcommand{\EO}{E^{{}}_0}
+\newcommand{\EEEO}{\EEE^{{}}_0}
+\newcommand{\FO}{F^{{}}_0}
+\newcommand{\FFFII}{\FFF^{{}}_2}
+\newcommand{\FFFIIav}{\langle\FFF^{{}}_2\rangle^{{}}_{t^{}}}
+\newcommand{\hO}{h^{{}}_0}
+\newcommand{\hOsqr}{h^{2_{}}_0}
+\newcommand{\hOcub}{h^{3_{}}_0}
+\newcommand{\HO}{H^{{}}_0}
+\newcommand{\kO}{k^{{}}_0}
+\newcommand{\kOsqr}{k^{_{}}_0}
+\newcommand{\kn}{k^{{}}_n}
+\newcommand{\kapn}{\kappa^{{}}}
+\newcommand{\kapO}{\kappa^{{}}_0}
+\newcommand{\kapI}{\kappa^{{}}_1}
+\newcommand{\kapII}{\kappa^{{}}_2}
+\newcommand{\LO}{L^{{}}_0}
+\newcommand{\LOsqr}{L^{2_{}}_0}
+\newcommand{\mmmII}{\mmm^{{}}_2}
+\newcommand{\nO}{n^{{}}_0}
+\newcommand{\NO}{N^{{}}_0}
+\newcommand{\omegabf}{\boldsymbol{\omega}}
+\newcommand{\oO}{{\omega^\notop_\mathrm{0}}}
+\newcommand{\oOsqr}{{\omega^{2_{}}_\mathrm{0}}}
+\newcommand{\ocN}{\omega^{(N)_{}}_\mathrm{c}}
+\newcommand{\olaser}{\omega^{{}}_\mathrm{laser}}
+\newcommand{\pO}{p^{{}}_0}
+\newcommand{\pS}{p^*}
+\newcommand{\pI}{p^{{}}_1}
+\newcommand{\pII}{p^{{}}_2}
+\newcommand{\PO}{P^{{}}_0}
+\newcommand{\QO}{Q^{{}}_0}
+\newcommand{\QI}{Q^{{}}_1}
+\newcommand{\rO}{r^{{}}_0}
+\newcommand{\rOsqr}{r^{2_{}}_0}
+\newcommand{\RO}{R^\notop_0}
+\newcommand{\RI}{R^\notop_1}
+\newcommand{\RII}{R^\notop_2}
+\newcommand{\RIII}{R^\notop_3}
+\newcommand{\SO}{S^{{}}_0}
+\newcommand{\so}{s^{{}}_\mathrm{o}}
+\newcommand{\sosqr}{s^{2_{}}_\mathrm{o}}
+\newcommand{\tO}{t^{{}}_0}
+\newcommand{\tth}{t^{{}}_\mathrm{th}}
+\newcommand{\tauO}{\tau^{{}}_0}
+\newcommand{\tauI}{\tau^{{}}_1}
+\newcommand{\tauth}{\tau^{{}}_\mathrm{th}}
+\newcommand{\thetan}{\theta^{{}}}
+\newcommand{\thetat}{\theta^{{}}_\mathrm{t}}
+\newcommand{\thetaO}{\theta^{{}}_0}
+\newcommand{\thetaI}{\theta^{{}}_1}
+\newcommand{\ThetaO}{\Theta^{{}}_0}
+\newcommand{\ThetaI}{\Theta^{{}}_1}
+\newcommand{\TO}{T^{{}}_0}
+\newcommand{\uO}{u^{{}}_0}
+\newcommand{\VO}{V^{{}}_0}
+\newcommand{\VOsqr}{V^{2_{}}_0}
+\newcommand{\vO}{v^{{}}_0}
+\newcommand{\vvvO}{\vvv^{{}}_0}
+\newcommand{\VVVO}{\VVV^{{}}_0}
+\newcommand{\vI}{v^{{}}_1}
+\newcommand{\vvvI}{\vvv^{{}}_1}
+\newcommand{\vII}{v^{{}}_2}
+\newcommand{\vvvII}{\vvv^{{}}_2}
+\newcommand{\uI}{u^{{}}_1}
+\newcommand{\xO}{x^{{}}_0}
+\newcommand{\xI}{x^{{}}_1}
+\newcommand{\yO}{y^{{}}_0}
+\newcommand{\zab}{z^{{}}_{ab}}
+\newcommand{\zO}{z^{{}}_0}
+\newcommand{\zOsqr}{z^{2_{}}_0}
+\newcommand{\volS}{\vol^*}
+\newcommand{\volO}{\vol^{{}}_0}
+\newcommand{\phiO}{\phi^{{}}_0}
+\newcommand{\phiI}{\phi^{{}}_1}
+\newcommand{\phiII}{\phi^{{}}_2}
+\newcommand{\rhoO}{\rho^\notop_0}
+\newcommand{\rhoI}{\rho^\notop_1}
+\newcommand{\rhoII}{\rho^\notop_2}
+\newcommand{\rhoS}{\rho^*}
+%
+% Symbols with a superscript (0)
+\newcommand{\ctiO}{\tilde{c}^{(0)_{}}}
+\newcommand{\ctil}{\tilde{c}^{(1)_{}}}
+\newcommand{\TTO}{T^{(0)_{}}}
+%
+% Symbols with a subscript ext, eq, eff
+\newcommand{\Deff}{D^{{}}_\mathrm{eff}}
+\newcommand{\JJJeti}{\tilde{\JJJ}^{\textrm{el}_{}}}
+\newcommand{\JJJcti}{\tilde{\JJJ}^{\textrm{conv}_{}}}
+\newcommand{\JJJdti}{\tilde{\JJJ}^{\textrm{diff}_{}}}
+\newcommand{\cext}{c^{{}}_\mathrm{ext}}
+\newcommand{\ceq}{c^{{}}_\mathrm{eq}}
+\newcommand{\EEEext}{\EEn_\mathrm{ext}}
+\newcommand{\pext}{p^{{}}_\mathrm{ext}}
+\newcommand{\peq}{p^{{}}_\mathrm{eq}}
+\newcommand{\phiext}{\phi^{{}}_\mathrm{ext}}
+\newcommand{\phieq}{\phi^{{}}_\mathrm{eq}}
+\newcommand{\phidip}{\phi^{{}}_\mathrm{dip}}
+\newcommand{\phitot}{\phi^{{}}_\mathrm{tot}}
+\newcommand{\rhoeext}{\rho^{\textrm{ext}_{}}_\mathrm{el}}
+\newcommand{\rhoeeq}{\rho^{\textrm{eq}_{}}_\mathrm{el}}
+\newcommand{\Vext}{V^{{}}_\mathrm{ext}}
+%
+% SI units
+\newcommand{\SIC}{^\circ\!\textrm{C}}
+\newcommand{\SIcm}{\textrm{cm}}
+\newcommand{\SIF}{\textrm{F}}
+\newcommand{\SIh}{\textrm{h}}
+\newcommand{\SIH}{\textrm{H}}
+\newcommand{\SIHz}{\textrm{Hz}}
+\newcommand{\SIMHz}{\textrm{MHz}}
+\newcommand{\SIkHz}{\textrm{kHz}}
+\newcommand{\SIJ}{\textrm{J}}
+\newcommand{\SIJs}{\textrm{J}\,\textrm{s}}
+\newcommand{\SImJ}{\textrm{mJ}}
+\newcommand{\SIK}{\textrm{K}}
+\newcommand{\SIL}{\textrm{L}}
+\newcommand{\SImL}{\textrm{mL}}
+\newcommand{\SImuL}{\textrm{\textmu{}L}}
+\newcommand{\SInL}{\textrm{nL}}
+\newcommand{\SIkg}{\textrm{kg}}
+\newcommand{\SIkgm}{\textrm{kg}\:\textrm{m$^{-3}$}}
+\newcommand{\SIm}{\textrm{m}}
+\newcommand{\SIM}{\textrm{M}}
+\newcommand{\SImM}{\textrm{mM}}
+\newcommand{\SImuM}{\textrm{\textmu{}M}}
+\newcommand{\SImm}{\textrm{mm}}
+\newcommand{\SImum}{\textrm{\textmu{}m}}
+\newcommand{\SInm}{\textrm{nm}}
+\newcommand{\SIN}{\textrm{N}}
+\newcommand{\SIPa}{\textrm{Pa}}
+\newcommand{\SIMPa}{\textrm{MPa}}
+\newcommand{\SIPas}{\textrm{Pa}\:\textrm{s}}
+\newcommand{\SImPas}{\textrm{mPa}\:\textrm{s}}
+\newcommand{\SIrad}{\textrm{rad}}
+\newcommand{\SIrads}{\textrm{rad}\:\SIs^{-1}}
+\newcommand{\SIs}{\textrm{s}}
+\newcommand{\SIms}{\textrm{ms}}
+\newcommand{\SImus}{\textrm{\textmu{}s}}
+\newcommand{\SIns}{\textrm{ns}}
+\newcommand{\SIS}{\textrm{S}}
+\newcommand{\SImS}{\textrm{mS}}
+\newcommand{\SIV}{\textrm{V}}
+\newcommand{\SImV}{\textrm{mV}}
+\newcommand{\SIeV}{\textrm{eV}}
+\newcommand{\SImeV}{\textrm{meV}}
+\newcommand{\SIW}{\textrm{W}}
+\newcommand{\SImW}{\textrm{mW}}
+
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\figrefs}[2]{Figs.~\ref{#1}~\&~\ref{#2}}
+
+% EQUATIONS
+\newcommand{\beq}[1]{\begin{equation} \eqlab{#1}}
+\newcommand{\eeq}{\end{equation}}
+\def\bal#1\eal{\begin{align}#1\end{align}}                       % begin/end align
+\def\bsubal#1\esubal{\bsub \begin{align}#1\end{align} \esub}     % begin/end align with a,b,c-equation labels
+\newcommand{\bsub}{\begin{subequations}}
+\newcommand{\esub}{\end{subequations}}
+\newcommand{\nn}{\nonumber}
+%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   TiKz Definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\vecsize{0.7cm}
+\def\vecsep{1.6cm}
+\def\compsep{1cm}
+\def\compwidth{2*\vecsize + 2*\vecsep}
+
+% Prototype: elements, color, node name, lower left corner, text
+\def\wordvectext#1#2#3#4#5#6{
+\coordinate (#3) at #4;
+\foreach \x in {0,...,#1}{
+    \fill[fill=#2!10,draw=#2]  ($(#3) + (\x*\vecsize,0)$) rectangle ($(#3) + (\vecsize,\vecsize) + (\x*\vecsize,0)$);
+}
+\node[anchor=south] #6 at ($(#3) + (#1*0.5,\vecsize)$) {\textbf{#5}};
+}
+
+% Prototype: elements, color, node name, lower left corner, text, vec ending node name
+\def\wordvectextin#1#2#3#4#5#6{
+\coordinate (#3) at #4;
+\foreach \x in {0,...,#1}{
+    \fill[fill=#2!10,draw=#2]  ($(#3) + (\x*\vecsize,0)$) rectangle ($(#3) + (\vecsize,\vecsize) + (\x*\vecsize,0)$);
+}
+\node[anchor=south] at ($(#3) + (#1*0.5,0)$) {\textbf{#5}};
+\coordinate (#6) at ($(#3) + (#1*\vecsize+\vecsize,0.5*\vecsize)$);
+}
+
+
+\def\wordarrowsEvenlyVec#1#2{
+    \draw[ultra thick,->] ($(#1.south) + (#2*\vecsize,0.5*\vecsize)$) -- +(1cm,0cm);
+    \draw[ultra thick,->] ($(#1.south) + (#2*\vecsize,0.5*\vecsize) + (0,\vecsep)$) -- +(1cm,0cm);
+    \draw[ultra thick,->] ($(#1.south) + (#2*\vecsize,0.5*\vecsize) + (0,2*\vecsep)$) -- +(1cm,0cm);
+}
+\def\wordarrowsEvenlyComponent#1{
+    \draw[ultra thick,->] ($(#1.south) + (0,\vecsize)$) -- +(1cm,0cm);
+    \draw[ultra thick,->] ($(#1.south) + (0,\vecsize) + (0,\vecsep)$) -- +(1cm,0cm);
+    \draw[ultra thick,->] ($(#1.south) + (0,\vecsize) + (0,2*\vecsep)$) -- +(1cm,0cm);
+}
+
+% Prototype: name, position, color, content
+\def\fullelement#1#2#3#4#5{
+    \begin{scope}[local bounding box=#5,shift={#2}]
+        #4
+    \end{scope} 
+    \node[anchor=west] (title) at ($(#5.north west) + (0,0.5)$) {\Large\textbf{#1}};
+    \draw[color=#3,ultra thick,rounded corners=5pt] (title.west) -| ($(#5.south west) + (-0.5, -0.5)$) -| ($(#5.north west) + (-0.5, +0.5) + (\linewidth-1pt,0)$)  -- (title.east);
+}
+
+% Prototype: name, position, color, content, tag
+\def\subelement#1#2#3#4#5{
+    \begin{scope}[local bounding box=#5,shift={#2}]
+        #4
+    \end{scope} 
+    \node[anchor=west] (title) at ($(#5.north west) + (0,0.5)$) {\Large\textbf{#1}};
+    \draw[color=#3,ultra thick,rounded corners=5pt] (title.west) -| ($(#5.south west) + (-0.5, -0.5)$) -| ($(#5.north east) + (0.5, 0.5)$)  -- (title.east);
+}
+
+
+% Prototype: name, position, color
+\def\component#1#2#3#4{
+    \node[anchor=north west,inner sep=0pt,minimum width=\compwidth, minimum height=1.5cm ,outer sep=0pt,rounded corners=5pt,fill=#3!10,draw=#3,rotate=90] (comp) at #2 {\textsc{#1}};
+    \coordinate (#4) at (comp.south west);
+}
+% Prototype: name, position, color
+\def\flatcomponent#1#2#3#4{
+    \node[anchor=north west,inner sep=0pt,minimum width=\compwidth, minimum height=1.5cm ,outer sep=0pt,rounded corners=5pt,fill=#3!10,draw=#3] (comp) at #2 {\textsc{#1}};
+    \coordinate (#4) at (comp.east);
+}
+
+% Prototype: (1) first node, (2) second node, (3) vert line x, (4) vert line y offset, (5) vertical offset at first node, (6) vertical offset at second node, (7) end node
+\def\spanpool#1#2#3#4#5#6#7{
+    \draw[dashed,ultra thick] ($(#1) + (0,#5)$) -- +(#3,0) |- ($(#2) + (0,#6)$);
+    \path[] (#1) -- (#2) node[midway] (midpoint) {};
+    \draw[->,ultra thick] ($(midpoint) + (#3,#4)$) -- +(1,0) |- ($(#7) - (3.6*\vecsize,-0.2*\vecsize)$);
+}
+% Prototype: first node, length, offset y, end node
+\def\spanpoolsingle#1#2#3#4{
+    \draw[->,ultra thick] ($(#1) + (0,#3)$) -- +(#2,0) |- ($(#4) - (3.6*\vecsize,-0.2*\vecsize)$);
+}
+
+% Prototype: node anchor, width, height, color, base label, x label, y label
+\def\matrixvert#1#2#3#4#5#6#7{
+     \node[fit={#1 ($($(#2,#3)$) + #1$)}, inner sep=0pt, draw=#4, thick,fill=#4!10] (rect) {};
+     \node[anchor=north] at (rect.south) {\textbf{#6}};
+     \node[anchor=west] at (rect.east) {\textbf{#7}};
+     \foreach \x in {1,...,#2}{
+        \draw[color=DTU_blue,text=black] ($(rect.south west) + (\x,0)$) -- +(0,#3) node[midway,anchor=south,rotate={90}] (vec\x) {\textbf{#5}};
+     }
+}
+
+\def\matrixhorz#1#2#3#4#5#6#7{
+     \node[fit={#1 ($($(#2,#3)$) + #1$)}, inner sep=0pt, draw=#4, thick,fill=#4!10] (rect) {};
+     \node[anchor=north] at (rect.south) {\textbf{#6}};
+     \node[anchor=west] at (rect.east) {\textbf{#7}};
+     \foreach \x in {1,...,#3-1}{
+        \draw[color=#4,text=black] ($(rect.south west) + (0,#3) + (0,-\x)$) -- +(#2,0) node[midway,anchor=south] (vec\x) {#5};
+     }
+     \draw[color=#4,text=black] ($(rect.south west) + (0,#3) + (0,-#3)$) -- +(#2,0) node[midway,anchor=south] (vec#3) {$\vdots$};
+}
+
+
+
+\makeatletter
+\def\grd@save@target#1{%
+  \def\grd@target{#1}}
+\def\grd@save@start#1{%
+  \def\grd@start{#1}}
+\tikzset{
+  grid with coordinates/.style={
+    to path={%
+      \pgfextra{%
+        \edef\grd@@target{(\tikztotarget)}%
+        \tikz@scan@one@point\grd@save@target\grd@@target\relax
+        \edef\grd@@start{(\tikztostart)}%
+        \tikz@scan@one@point\grd@save@start\grd@@start\relax
+        \draw[minor help lines] (\tikztostart) grid (\tikztotarget);
+        \draw[major help lines] (\tikztostart) grid (\tikztotarget);
+        \grd@start
+        \pgfmathsetmacro{\grd@xa}{\the\pgf@x/1cm}
+        \pgfmathsetmacro{\grd@ya}{\the\pgf@y/1cm}
+        \grd@target
+        \pgfmathsetmacro{\grd@xb}{\the\pgf@x/1cm}
+        \pgfmathsetmacro{\grd@yb}{\the\pgf@y/1cm}
+        \pgfmathsetmacro{\grd@xc}{\grd@xa + \pgfkeysvalueof{/tikz/grid with coordinates/major step}}
+        \pgfmathsetmacro{\grd@yc}{\grd@ya + \pgfkeysvalueof{/tikz/grid with coordinates/major step}}
+        \foreach \x in {\grd@xa,\grd@xc,...,\grd@xb}
+        \node[anchor=north] at (\x,\grd@ya) {\pgfmathprintnumber{\x}};
+        \foreach \y in {\grd@ya,\grd@yc,...,\grd@yb}
+        \node[anchor=east] at (\grd@xa,\y) {\pgfmathprintnumber{\y}};
+      }
+    }
+  },
+  minor help lines/.style={
+    help lines,
+    step=\pgfkeysvalueof{/tikz/grid with coordinates/minor step}
+  },
+  major help lines/.style={
+    help lines,
+    line width=\pgfkeysvalueof{/tikz/grid with coordinates/major line width},
+    step=\pgfkeysvalueof{/tikz/grid with coordinates/major step}
+  },
+  grid with coordinates/.cd,
+  minor step/.initial=.2,
+  major step/.initial=1,
+  major line width/.initial=2pt,
+}
+
+
+
+% DEFINE COLORS
+\definecolor{DTU_white}{RGB}{255,255,255}
+\definecolor{DTU_red}{RGB}{153,0,0}
+\definecolor{DTU_blue}{RGB}{47,62,234}
+\definecolor{DTU_navy_blue}{RGB}{3,15,79}
+\definecolor{DTU_bright_green}{RGB}{31,208,130}
+\definecolor{DTU_yellow}{RGB}{246,208,77}
+\definecolor{DTU_orange}{RGB}{252,118,52}
+\definecolor{DTU_pink}{RGB}{247,187,177}
+\definecolor{DTU_gray}{RGB}{218,218,218}
+\definecolor{DTU_bright_red}{RGB}{232,63,72}
+\definecolor{DTU_green}{RGB}{0,136,53}
+\definecolor{DTU_purple}{RGB}{121,35,142}
+

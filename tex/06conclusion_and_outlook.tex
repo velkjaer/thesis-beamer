@@ -1,0 +1,101 @@
+\section{Conclusion \& Outlook}
+\frame{
+	\frametitle{Conclusion I of III}
+    \begin{itemize}
+        \item We successfully produced similar results to the likes of both \cite{Logan2019BaracksModeling} and \cite{Peters2019KnowledgeRepresentations}.
+        \item We presented to our knowledge a first of its kind method for evaluating task-specific LMs with pre-trained general purpose LMs.
+    \end{itemize}
+    \textbf{Into the guts of KAR:}
+    \begin{itemize}
+        \item Looking into the KAR mechanism of KnowBERT, we associated primarily two attention patterns with knowledge enhancement.
+        \begin{enumerate}
+            \item Dominant Span Attention for which most tokens attend to the same candidate spans.
+            \item Long-Distance Attention for which specific tokens attend to distant mention spans from the input on both sides of the heatmap diagonal.
+        \end{enumerate}
+        \item We found that the candidate generators for both the wikipedia and wordnet knowledge bases provide relevant lists of candidates. 
+        \begin{itemize}
+            \item The wiki linker tends to distribute importance across all generated entities per mention-span. 
+            \item the wordnet linker becomes more certain and creates sparse distributions.
+        \end{itemize}
+    \end{itemize}
+}   
+
+\frame{
+	\frametitle{Conclusion II of III: Contextual Embeddings}
+    \begin{itemize}
+        \item Using BERT-large as a baseline we found that the all KnowBERT-variants similarly structured contextual embeddings. General trends include:
+        \begin{itemize}
+            \item Classification tokens [CLS] are commonly projected far from the center using both PCA and t-SNE.
+            \item POS-tag clusters tend to be more distinctive.
+        \end{itemize}
+        \item Natheless, the first principal components of the KnowBERT variants account for slightly more variance relative to baseline.
+    \end{itemize}
+}   
+
+\frame{
+	\frametitle{Conclusion III of III: Fact Completion}
+	\textbf{KGLM:}
+    \begin{itemize}
+        \item In general tends to function well related to person related categories.
+        \item The models I have been able to train does not function well as text-generators.
+        \item Good entity annotations are vital for the KGLM's performance.
+        \begin{itemize}
+            \item Copy mechanism works well given good annotations.
+            \item Bad sampling messes with performance.
+        \end{itemize}
+    \end{itemize}
+    \textbf{KnowBERT:}
+    \begin{itemize}
+        \item Knows its geography, performing very well on the nation-capital and city-state categories. 
+        \item Less impressive on person related categories, but generally improves upon BERT-large baseline
+    \end{itemize}
+}   
+
+\begin{frame}{Outlook}
+\footnotesize
+We divide the potential follow-up projects into three overarching categories sorted after tediousness in increasing order:
+\begin{columns}
+\begin{column}[T]{0.333\textwidth}<+->
+\colheading{DTU_red}{Extending KAR}
+\begin{itemize}
+{\footnotesize
+    \item  To be transformer agnostic using HuggingFace's \texttt{transformers} library, hence making KAR compatible with other pre-trained models, e.g., the GPT-2 \cite{radford2019language}, Plug \& Play LM \cite{Dathathri2019PlugGeneration}
+    \item Utilise the approach on downstream tasks where real-world knowledge is imperative.
+}
+\end{itemize}
+
+\end{column}
+\begin{column}[T]{0.333\textwidth}<+->
+\colheading{DTU_red}{Entity Annotations for the KGLM}
+\begin{itemize}
+{\footnotesize
+    \item Other Marginalisation Techniques
+    \begin{itemize}
+        \item Other sampling techniques.
+        \item A candidate generator similar to KnowBERT to estimate annotations.
+    \end{itemize}
+    \item Validate the effect of changing entity information.
+    \item Test how number of allowed recent entity time steps affects performance.
+}
+\end{itemize}
+
+\end{column}
+\begin{column}[T]{0.333\textwidth}<+->
+\colheading{DTU_red}{Extending to low-resource languages}
+\begin{itemize}
+{\footnotesize
+    \item Danish BERTram equipped with KAR mechanisms?
+    \begin{itemize}
+        \item WordNet is available in Danish \Smiley{} 
+        \item Wikipedia is available in Danish \Smiley{}
+        \item ConceptNet is multi-lingual \Smiley{}
+    \end{itemize}
+    \item KGLM "semi-supervised" knowledge graph creation
+}
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+

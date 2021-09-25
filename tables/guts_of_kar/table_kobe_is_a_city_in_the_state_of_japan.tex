@@ -1,0 +1,36 @@
+\begin{table}[t!]
+\tiny
+\centering
+\begin{tabular}{|p{2.4cm}|p{3.2cm}c|p{3.2cm}c|}
+\hline
+\multirow{3}{*}{\textbf{Candidate Spans}} & \multicolumn{4}{c|}{\textsf{kobe is a city in the state of japan . }} \\
+& \multicolumn{2}{c}{Priors (top-2)} & \multicolumn{2}{c|}{Norm. EL Scores (top-2)} \\ \cline{2-5}
+& \multicolumn{1}{c|}{\textsf{ent}} & $p(\mathsf{ent})$ & \multicolumn{1}{c|}{\textsf{ent}} & $\psi_{m,k}$ \\ \hline 
+\multicolumn{5}{c}{\textbf{\textsf{Wiki}}}\\
+\hline
+\multirow{2}{*}{\textsf{kobe}}& Great Hanshin earthquake & 0.26 & Great Hanshin earthquake & 0.12\\ 
+& Kobe Bryant & 0.22 & Kobe Bryant & 0.09\\\hline 
+\multirow{2}{*}{\textsf{city}}& City & 0.45 & Cities of the ancient Near East & 0.03\\ 
+& City status in the United Kingdom & 0.08 & Urban areas in Sweden & 0.03\\\hline 
+\multirow{2}{*}{\textsf{state}}& Political divisions of the United States & 0.50 & Michigan & 0.03\\ 
+& U.S. state & 0.10 & States of Brazil & 0.03\\\hline 
+\multirow{2}{*}{\textsf{state of japan}}& Postwar Japan & 0.94 & Japan & 0.50\\ 
+& Japan & 0.06 & Postwar Japan & 0.50\\\hline 
+\multirow{2}{*}{\textsf{japan}}& Japan & 0.79 & Japan Self-Defense Forces & 0.03\\ 
+& Japan national football team & 0.02 & Empire of Japan & 0.03\\\hline 
+\multicolumn{5}{c}{\textbf{\textsf{Wordnet}}}\\
+\hline
+\multirow{2}{*}{\textsf{kobe}}& kobe.n.01 & 1.00 & kobe.n.01 & 1.00\\ 
+& N/A & 0.00 & N/A & 0.00\\\hline 
+\multirow{2}{*}{\textsf{is}}& be.v.01 & 0.64 & be.v.02 & 0.95\\ 
+& be.v.02 & 0.18 & be.v.01 & 0.05\\\hline 
+\multirow{2}{*}{\textsf{a}}& angstrom.n.01 & 0.50 & a.n.07 & 1.00\\ 
+& a.n.07 & 0.07 & angstrom.n.01 & 0.00\\\hline 
+\multirow{2}{*}{\textsf{city}}& city.n.01 & 0.87 & city.n.01 & 1.00\\ 
+& city.n.02 & 0.12 & city.n.03 & 0.00\\\hline 
+\multirow{2}{*}{\textsf{state}}& state.n.01 & 0.37 & state.n.02 & 0.97\\ 
+& state.v.01 & 0.25 & state.n.01 & 0.03\\\hline 
+\multirow{2}{*}{\textsf{japan}}& japan.n.01 & 0.46 & japan.n.01 & 1.00\\ 
+& japan.n.02 & 0.31 & japan.n.02 & 0.00\\\hline 
+\end{tabular}
+\end{table}

@@ -1,0 +1,43 @@
+\section{Evaluation Setup}
+
+\subsection{Result Reproducibility}
+
+\begin{frame}{KGLM Reproducibility: Perplexity}
+\begin{table}[]
+    \centering
+    \tiny
+    \begin{tabular}{l|c|c}
+   \textbf{Metric} & \textbf{AWD-LSTM} \cite{Merity2017RegularizingModels} & \textbf{KGLM} \cite{Logan2019BaracksModeling} \\
+   Dev. Perplexity (PPL)  & 73.93 & 45.00  \\
+   Dev. Unknown Penalised PPL & 136.61 & 68.76 \\
+   Dev. KG PPL & N/A & 5.15 \\
+   Dev. BG PPL & N/A & 61.48 \\
+    \end{tabular}
+\end{table}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.5\textwidth}{!}{
+        \input{graphics/kglm/tikz/kglm_awd_ppl}
+        }
+    \end{figure}
+
+\end{frame}
+
+\begin{frame}{KnowBERT: Reproducibility - Pretraining}
+    {\footnotesize
+    \textbf{Training Data:}
+    \begin{itemize}
+        \item Wikipedia (2,500M words) w/o lists, tables, and header
+        \item BooksCorpus 
+    \end{itemize}
+    }
+    \input{tables/knowbert_reproducing_results}
+    {\footnotesize
+    {\dggr}The held-out test set used consists of $\approx 85$K BERT input sequences. \\
+    {\textdaggerdbl} The Wikidata MRR was tested across 17 different categories including "movieStars", "personEmployer" and "videoGamePlatform".\\
+    {$^\ast$} In millions. \\
+    \colbf{our results are presented in red.}
+    }
+\end{frame}
+

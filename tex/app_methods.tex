@@ -1,0 +1,155 @@
+\section{Elaborations}
+
+\frame{
+    \frametitle{The KGLM: Linked WikiText-2 and Entity Embeddings}
+    \begin{columns}
+        \begin{column}[T]{0.5\textwidth}
+            \textbf{Linked-WikiText-2}
+            One of the biggest contributions of \cite{Logan2019BaracksModeling} was the introduction of the Linked-WikiText-2 dataset:
+            \input{tables/kglm_linked_wikitext2}
+        \end{column}
+        \begin{column}[T]{0.5\textwidth}
+            \textbf{Pretrained Entity Embeddings}
+            The authors utilise fixed pre-trained entity, and relation, embeddings using TransE \cite{NIPS2013_5071}. For a given KG triplet, we hence minimise 
+            \begin{equation*}
+                \delta\qty(\varepsilon_p, \varepsilon_r, \varepsilon_e) = \norm{\varepsilon_p + \varepsilon_r - \varepsilon_e}^2. 
+            \end{equation*}
+            In practice, we achieve this through a max-margin objective to learn the embeddings
+            \begin{align*}
+                \mathcal{L}_{\mathrm{TransE}} &= \max[0, \gamma + \delta(\varepsilon_p, \varepsilon_r, \varepsilon_e) \\
+                &- \delta(\varepsilon_p^{'}, \varepsilon_r, \varepsilon_e^{'})],
+            \end{align*}
+            where $\gamma$ is the margin and either $p'$ or $e'$ is the entity embedding selected at random. 
+        \end{column}
+    \end{columns}
+}
+
+
+\frame{
+    \frametitle{External Knowledge Sources}
+    \input{tables/external_knowledge_sources}
+}
+
+\begin{frame}{General Remarks: Hardware Specifications}
+All the experiments were conducted on DTU's HPC on the \texttt{login2}-nodes. The architectures used to train the miscellaneous models are:
+\input{tables/hardware_specifications}
+\end{frame}
+
+
+
+\frame{
+    \frametitle{KnowBERT: Training Procedure I}
+    \begin{columns}
+    \begin{column}[T]{0.6\textwidth}
+    \input{algorithms/knowbert_training_procedure}
+    \end{column}
+    \begin{column}[T]{0.4\textwidth}
+    {\footnotesize
+    \textbf{WordNet Objective:}
+    Minimise Negative Log-Likelihood (NLL),
+        \begin{equation}\label{eq:entity_linker_maximum_likelihood}
+            \mathcal{L}_{\mathrm{EL}} = - \sum_m \log \qty(\dfrac{\exp\qty(\psi_{m,g})}{\sum_k \exp\qty(\psi_{m,k})}),
+        \end{equation}
+    \textbf{Wiki Objective:}
+    Minimise max-margin,
+    \begin{equation}\label{eq:entity_linker_max_margin}
+    \begin{split}
+        \Lel &= \max\qty(0, \gamma - \psi_{m,g}) \\
+        &+ \sum_{e_{m,k} \neq e_{m,g}} \max\qty(0, \gamma + \psi_{m,k}). 
+    \end{split}
+\end{equation}
+    % ITEMS
+    \begin{itemize}
+        \item KnowBERT is pre-trained incrementally using a \textit{"chain-thaw"} approach \cite{felbo-etal-2017-using}.
+    \end{itemize}
+}
+    \end{column}
+    \end{columns}
+}
+\frame{
+    \frametitle{KnowBERT: Training Procedure II}
+    \begin{columns}
+    \begin{column}[T]{0.5\textwidth}
+    \textbf{Learning Rate Scheduler}
+    \begin{itemize}
+        \item Slanted Triangular, i.e., linearly increasing warm-up $\rightarrow$ gradual decrease.
+    \end{itemize}
+    \textbf{BERT} $\rightarrow$ \textbf{KnowBERT}:
+    \begin{itemize}
+        \item KnowBERT-Wiki fine-tuned for 750K gradient updates,
+        \item KnowBERT-WordNet fine-tuned for 500K gradient updates,
+        \item KnowBERT-W+W fine-tuned for 500K gradient updates subsequently to fine-tuning KnowBERT-Wiki.
+    \end{itemize}
+    \end{column}
+    \begin{column}[T]{0.5\textwidth}
+
+    \textbf{Learning rate deviations:}
+    \begin{itemize}
+        \item The randomly initialised layers in the KAR surrounding each KB had the largest learning rate $\ell_r$. 
+        \begin{itemize}
+            \item The learning rate of the BERT was below used $0.25 \ell_r$ and the layers above used learning rate $0.5 \ell_r$.
+        \end{itemize}
+    \end{itemize}
+    \textbf{Dataset Sampling Splits}
+    Wiki \& wordnet (80\% unlabeled data, 20\% labeled EL data), \\
+    W+W (85\%, 7.5\%, 7.5\%)
+    \end{column}
+    \end{columns}
+}
+
+\begin{frame}{Wikidata MRR}
+    \begin{figure}
+        \centering
+        \includegraphics[height=0.8\textheight]{graphics/kb/wikidata_mrr.PNG}
+    \end{figure}
+    Courtesy of Peters et al. - we obtained similar results on all categories.
+\end{frame}
+
+
+\begin{frame}{The guts of KAR: Hamlet}
+    \KARPLOT{3}
+\end{frame}
+\begin{frame}{The guts of KAR: Hamlet (Entities)}
+    \input{tables/guts_of_kar/table_hamlet_is_a_book_that_was_written_by_william_shakespeare}
+\end{frame}
+
+% t-SNE 
+\begin{frame}{Contextual Word Embeddings: t-SNE - from overview to sampled few}
+    \begin{figure}
+        \centering
+        \includegraphics[height=0.15\textheight]{graphics/contextual_embeddings/new/tSNE_9512_1_2_baseline_testNoneNone.eps}
+    \end{figure}
+    \begin{figure}
+        \centering
+        \includegraphics[height=0.78\textheight]{graphics/contextual_embeddings/new/tSNE_250_1_2_baseline_test_annotatedNone.eps}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Contextual Word Embeddings: t-SNE - from overview to sampled few}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+        \textbf{KnowBERT-wordnet}
+            \begin{figure}
+                \centering
+                \includegraphics[height=0.15\textheight]{graphics/contextual_embeddings/tSNE_9512_1_2_knowbert_wordnetNone_title.eps}
+            \end{figure}
+            \begin{figure}
+                \centering
+                \includegraphics[height=0.55\textheight]{graphics/contextual_embeddings/tSNE_1024_1_2_knowbert_wordnet_annotated_title.eps}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+        \textbf{KnowBERT-W+W}
+            \begin{figure}
+                \centering
+                \includegraphics[height=0.15\textheight]{graphics/contextual_embeddings/tSNE_9512_1_2_knowbert_wiki_wordnetNone_title_USE.eps}
+            \end{figure}
+            \begin{figure}
+                \centering
+                \includegraphics[height=0.55\textheight]{graphics/contextual_embeddings/tSNE_300_1_2_knowbert_wiki_wordnet_annotated_title.eps}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+

@@ -1,0 +1,41 @@
+\pgfplotscreateplotcyclelist{tb}{
+	very thick, DTU_navy_blue, smooth\\%
+	very thick, DTU_blue, smooth\\%
+	very thick, DTU_red, smooth\\%
+	very thick, DTU_orange, smooth\\%
+}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{positioning}
+
+
+\begin{tikzpicture}
+
+	 \begin{axis}[cycle list name=tb, 
+		grid=both,
+		grid style={solid,gray!30!white},
+		xmin=0,
+		xlabel={Step},
+		ylabel={Perplexity (PPL)},
+		legend style={font=\footnotesize},
+		ymax=120,
+		every x tick scale label/.style={
+			at={(1,0)},xshift=1pt,anchor=south west,inner sep=0pt
+		},
+		%ymode=log,
+		%x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+ 		% y label style={at={(axis description cs:-0.22,.6)},anchor=east},
+		]
+		
+		% awd-lstm
+		\addplot table [x=Step, y=Value, col sep=comma] {csv/kglm/run-kglm_awd-lstm_train-tag-ppl.csv};
+		\addplot table [x=Step, y=Value, col sep=comma] {csv/kglm/run-kglm_awd-lstm_validation-tag-ppl.csv};
+		
+		% kglm-generative
+		\addplot table [x=Step, y=Value, col sep=comma] {csv/kglm/run-kglm_skytsengel_train-tag-ppl.csv};
+		\addplot table [x=Step, y=Value, col sep=comma] {csv/kglm/run-kglm_skytsengel_validation-tag-ppl.csv};
+		
+		\legend{AWD-LSTM$_\mathrm{train}$, AWD-LSTM$_\mathrm{val}$, KGLM$_\mathrm{train}$ , KGLM$_\mathrm{val}$};
+	\end{axis}
+	
+\end{tikzpicture}%

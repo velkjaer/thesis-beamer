@@ -1,0 +1,128 @@
+\newcommand{\componentEncoder}[3]{
+    \draw[rounded corners=5pt, thick, fill=#2] (0.75, #1) rectangle (5.25, #1 + 0.5);
+    \node[anchor=south] at (3, #1) {#3};
+}
+
+\newcommand{\componentDecoder}[3]{
+    \draw[rounded corners=5pt, thick, fill=#2] (0.75 + 6, #1) rectangle (5.25 + 6, #1 + 0.5);
+    \node[anchor=south] at (3 + 6, #1) {#3};
+    }
+
+\newcommand{\componentFeedForward}[3]{
+
+    \draw[rounded corners=5pt, thick, fill=#2] (0.75, #1) rectangle (2.75, #1 + 0.5);
+    \node[anchor=south] at (1.75, #1) {#3};
+    
+    \draw[rounded corners=5pt, thick, fill=#2] (3.25, #1) rectangle (5.25, #1 + 0.5);
+    \node[anchor=south] at (1.75 + 2.5, #1) {#3};
+}
+
+\newcommand{\componentFeedForwardDecoder}[3]{
+
+    \draw[rounded corners=5pt, thick, fill=#2] (0.75+6, #1) rectangle (2.75+6, #1 + 0.5);
+    \node[anchor=south] at (1.75+6, #1) {#3};
+    
+    \draw[rounded corners=5pt, thick, fill=#2] (3.25+6, #1) rectangle (5.25+6, #1 + 0.5);
+    \node[anchor=south] at (1.75 + 2.5+6, #1) {#3};
+}
+
+\newcommand{\posEncoding}[3]{
+    \draw[-stealth, thick] (#1, #2) -- (#1, #3);
+    \draw[thick] (#1, #2 - 0.125) circle (\radiusC);
+    \draw (#1 - \radiusC/2, #2 - 0.125) -- (#1 + \radiusC /2, #2 - 0.125);
+    \draw (#1, #2 - 0.125 - \radiusC/2) -- (#1, #2 - 0.125 + \radiusC /2);
+}
+
+    \begin{tikzpicture}
+    
+    \def\xFFEL{1.75};
+    \def\xFFER{1.75 + 2.5};
+    
+    \def\xFFDL{1.75 + 6};
+    \def\xFFDR{1.75 + 2.5 + 6};
+
+    %\draw (0, -2)  to[grid with coordinates] (12, 5);
+
+    % ENCODER 
+    \draw[rounded corners=8pt, very thick, DTU_navy_blue!80] (0.5, 0.5) rectangle (5.5, 5);
+    
+    \node[anchor=south, DTU_navy_blue!80] (encoder.tag) at (3, 5.5) {\textbf{\textsf{Encoder \#1}}};
+    \fillMatrix{1}{-0.5}{2.5}{0}{DTU_green}
+    \fillMatrix{3.5}{-0.5}{5}{0}{DTU_green}
+    \node[anchor=north] (word1) at (\xFFEL, -0.5) {\textsf{to}};
+    \node[below=0.3cm, DTU_green!60]  at (word1) {$\xxx_1$};
+    \node[anchor=north] (word2) at  (\xFFER, -0.5) {\textsf{be}};
+    \node[below=0.3cm, DTU_green!60]  at (word2) {$\xxx_2$};
+    \node at (3, -0.25) {$\dotsc$};
+    \componentEncoder{1}{DTU_blue!50}{self-attention}
+    \componentEncoder{2}{DTU_purple!50}{add \& normalise}
+    \componentEncoder{4}{DTU_purple!50}{add \& normalise}
+    \componentFeedForward{3}{DTU_yellow!50}{FF}
+    % arrows
+    \def\radiusC{0.125};
+    \draw[-stealth, thick] (\xFFEL, 0.375) -- (\xFFEL, 1);
+    \draw[thick] (\xFFEL, 0.25) circle (\radiusC);
+    \draw (\xFFEL - \radiusC/2, 0.25) -- (\xFFEL + \radiusC /2, 0.25);
+    \draw (\xFFEL, 0.25 - \radiusC/2) -- (\xFFEL, 0.25 + \radiusC /2);
+    \posEncoding{\xFFER}{0.375}{1}
+    
+    \foreach \y in {1.5, 2.5, 3.5}{
+        \draw[-stealth, thick] (\xFFEL, \y) -- (\xFFEL, \y+0.5);
+        \draw[-stealth, thick] (\xFFER, \y) -- (\xFFER, \y+0.5);
+    }
+    \coordinate (posStartLower) at (\xFFER, 0.75);
+    \coordinate (posEndLower) at (0.75, 2.25);
+    \draw[rounded corners = 2pt, dashed, stealth-, thick] (posEndLower) -- ($(posEndLower) + (-0.125,0)$) |- (posStartLower); 
+    
+    \coordinate (posStartUpper) at (\xFFER, 2.75);
+    \coordinate (posEndUpper) at (0.75, 4.25);
+    \draw[rounded corners = 2pt, dashed, stealth-, thick] (posEndUpper) -- ($(posEndUpper) + (-0.125,0)$) |- (posStartUpper); 
+    
+     \foreach \x in {\xFFEL, \xFFER} {
+        \draw[thick, -stealth] (\x, 4.5) -- (\x, 5.25);
+    }
+
+    \def\posEnc{-1.25};
+    
+    \node[anchor=east] (positional) at (\xFFEL - \radiusC/2 , 0.375) {\tiny \textsc{Positional}};
+    \node[anchor=north] at (positional) {\tiny \textsc{Encoding}};
+
+    % DECODER
+    \draw[rounded corners=8pt, very thick, DTU_orange]
+    (6.5, -1) rectangle (11.5, 5);
+    \node[anchor=south, DTU_orange] (encoder.tag) at (9, 5.5) {\textbf{\textsf{Decoder \#1}}};
+    \componentDecoder{-0.75}{DTU_blue!50}{self-attention}
+    \componentDecoder{0.25}{DTU_purple!50}{add \& normalise}
+    \componentDecoder{1.25}{DTU_blue!80}{encoder-decoder attention}
+    \componentDecoder{2.25}{DTU_purple!50}{add \& normalise}
+    \componentFeedForwardDecoder{3.25}{DTU_yellow!50}{FF}
+    \componentDecoder{4.25}{DTU_purple!50}{add \& normalise}
+    
+    \posEncoding{\xFFEL +6}{-1.25}{-0.75}
+    \posEncoding{\xFFER +6}{-1.25}{-0.75}
+    
+    \foreach \y in {-0.25, 0.75, 1.75, 2.75, 3.75}{
+        \draw[-stealth, thick] (\xFFEL+6, \y) -- (\xFFEL+6, \y+0.5);
+        \draw[-stealth, thick] (\xFFER+6, \y) -- (\xFFER+6, \y+0.5);
+    }
+    
+    
+     \foreach \posStart/\posEnd in {-0.875/0.5, 1/2.5, 3/4.5}{
+        \coordinate (posStart) at (\xFFER + 6, \posStart);
+        \coordinate (posEnd) at (0.75 + 6, \posEnd);
+        \draw[rounded corners = 2pt, dashed, stealth-, thick] (posEnd) -- ($(posEnd) + (-0.125,0)$) |- (posStart); 
+    }
+    
+    \coordinate (posStartLower) at (\xFFER, 0.75);
+    \coordinate (posEndLower) at (0.75, 2.25);
+    \draw[rounded corners = 2pt, dashed, stealth-, thick] (posEndLower) -- ($(posEndLower) + (-0.125,0)$) |- (posStartLower); 
+    
+    \coordinate (posStartUpper) at (\xFFER, 2.75);
+    \coordinate (posEndUpper) at (0.75, 4.25);
+    \draw[rounded corners = 2pt, dashed, stealth-, thick] (posEndUpper) -- ($(posEndUpper) + (-0.125,0)$) |- (posStartUpper); 
+    
+    \foreach \x in {\xFFEL + 6 , \xFFER + 6 } {
+        \draw[thick, -stealth] (\x, 4.75) -- (\x, 5.25);
+    }
+   
+    \end{tikzpicture}

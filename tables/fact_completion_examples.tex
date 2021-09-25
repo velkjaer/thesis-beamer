@@ -1,0 +1,22 @@
+\begin{table}[t!]
+    \centering
+    \resizebox{1\textwidth}{!}{
+    \begin{tabular}{l l l l l l}
+    \hline\hline
+      \multirow{2}{*}{\textbf{LM}}  & \multirow{2}{*}{\textbf{Category}} & \multirow{2}{*}{\textbf{Antecedent} <$x$>} & \multirow{2}{*}{\textbf{Consequent} <$y$>} & \multirow{2}{*}{\textbf{KGLM}} & \multirow{2}{*}{\knowbert} \\
+      & & & & &  \\\hline
+        \multirow{2}{*}{Both} & \textsf{book-author}  & Mein Kampf & Adolph Hitler & Adolph & Adolph \\
+         &  \textsf{city-state} & Anchorage & Alaska & Alaska & Alaska \\\hline
+     \multirow{2}{*}{KGLM} & \textsf{person-birthloc} & Kobe Bryant & Philly & Philly & Chicago \\
+      &  \textsf{book-author} & Twelfth night & Shakespeare & Shakespeare & Prof. \\\hline
+      Know- & \textsf{nation-capital} & The capital of Denmark is & CPH & a & CPH\\
+     BERT & \textsf{city-state} & Berkeley & Cali & the & Cali \\\hline
+     \multirow{2}{*}{None}  & person-spouse & Jay-Z & Beyonce & the & Sarah \\
+      & person-birthdate & Andy Warhol & 06/08/1928 &  the & broadway  \\
+    \hline\hline
+    \end{tabular}
+    }
+    \caption[Fact Completion Examples for a selected subset of sentences.] {\textbf{Fact Completion Examples.} Qualitative Evaluation using KGLM with $N=100$ and KnowBert-Wiki for a selected subset of sentences. 
+    }
+    \label{tab:fact_completion_table}
+\end{table}

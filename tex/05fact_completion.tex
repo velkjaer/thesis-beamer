@@ -1,0 +1,64 @@
+\section{Language Models as Knowledge Bases}
+
+% fact-completion experiment
+\begin{frame}{Fact-completion: Experiment}
+    \begin{block}{Assessing the KGLM and KnowBERT jointly}
+        To benchmark both the KGLM and KnowBERT on the same task, the project have primarily focused on the task of fact-completion.
+    \end{block}
+{\footnotesize
+\begin{columns}
+\begin{column}[T]{0.5\textwidth}
+    \textbf{KGLM}
+    \begin{enumerate}
+        \item Sample annotations for the KGLM drawing $N$ importance samples
+        \item Use the sampled annotations to compete at next-token prediction
+    \end{enumerate}
+\end{column}
+\begin{column}[T]{0.5\textwidth}
+    \textbf{KnowBERT}
+    \begin{enumerate}
+        \item Mask the last token
+        \begin{equation*}
+            \text{Kobe is a city in [MASK]}
+        \end{equation*}
+        \item Predict [MASK]
+    \end{enumerate}
+\end{column}
+\end{columns}
+}
+\end{frame}
+ 
+% examples
+\begin{frame}{Fact-Completion: Examples (KGLM \& KnowBERT)}
+\input{tables/fact_completion_examples}
+\end{frame}
+
+% initial results
+\begin{frame}{Fact-Completion: Results (KGLM \& KnowBERT)}
+\input{tables/fact_completion_results}
+\end{frame} 
+
+% % new benchmark
+% \begin{frame}{LAnguage Model Analysis (LAMA) Benchmark}
+% STATISTICS \cite{Petroni2019LanguageBases}
+% \end{frame}
+
+% % new results
+% \begin{frame}{LAMA Results}
+% TABLE
+% \end{frame}
+
+% % new examples
+% \begin{frame}{LAMA}
+% TABLE
+% \end{frame}
+
+% % LAMA (petroni et al.)
+% \begin{frame}{LAMA Discussion}
+% Discussion
+% \end{frame}
+
+% % DEMO\
+% \begin{frame}{Fact-Completion Demo}
+% WebServer 
+% \end{frame}

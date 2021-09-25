@@ -1,0 +1,34 @@
+\begin{table}[t!]
+\tiny
+\centering
+\begin{tabular}{|p{2.4cm}|p{2.8cm}c|p{2.8cm}c|}
+\hline
+\multirow{3}{*}{\textbf{Candidate Spans}} & \multicolumn{4}{c|}{\textsf{kobe bryant was born in philadelphia . }} \\
+& \multicolumn{2}{c}{Priors (top-2)} & \multicolumn{2}{c|}{Norm. EL Scores (top-2)} \\ \cline{2-5}
+& \multicolumn{1}{c|}{\textsf{ent}} & $p(\mathsf{ent}|m)$ & \multicolumn{1}{c|}{\textsf{ent}} & $\psi_{m,k}$ \\ \hline 
+\multicolumn{5}{c}{\textbf{\textsf{Wiki}}}\\
+\hline
+\multirow{2}{*}{\textsf{kobe}}& Great Hanshin earthquake & 0.26 & Kobe Bryant & 0.09\\ 
+& Kobe Bryant & 0.22 & Derek Fisher & 0.09\\\hline 
+\multirow{2}{*}{\textsf{kobe bryant}}& Kobe Bryant & 0.56 & Kobe Bryant & 0.26\\ 
+& Kobe Bryant sexual assault case & 0.15 & Los Angeles Lakers & 0.25\\\hline 
+\multirow{2}{*}{\textsf{bryant}}& William Cullen Bryant & 0.10 & Bryant, Minneapolis & 0.03\\ 
+& Bryant, Humboldt County, California & 0.10 & Kobe Bryant & 0.03\\\hline 
+\multirow{2}{*}{\textsf{born}}& Nativity of Jesus & 0.70 & Frank Zamboni & 0.03\\ 
+& Michael Savage & 0.02 & Ingvar Kamprad & 0.03\\\hline 
+\multirow{2}{*}{\textsf{philadelphia}}& Philadelphia & 0.70 & Philadelphia & 0.05\\ 
+& Philadelphia (film) & 0.03 & Philadelphia Eagles & 0.03\\\hline 
+\multicolumn{5}{c}{\textbf{\textsf{Wordnet}}}\\
+\hline
+\multirow{2}{*}{\textsf{kobe}}& kobe.n.01 & 1.00 & kobe.n.01 & 1.00\\ 
+& N/A & 0.00 & N/A & 0.00\\\hline 
+\multirow{2}{*}{\textsf{was}}& be.v.01 & 0.64 & be.v.01 & 0.99\\ 
+& be.v.02 & 0.18 & equal.v.01 & 0.01\\\hline 
+\multirow{2}{*}{\textsf{born}}& bear.v.01 & 0.24 & give birth.v.01 & 1.00\\ 
+& give birth.v.01 & 0.18 & wear.v.02 & 0.00\\\hline 
+\multirow{2}{*}{\textsf{in}}& in.r.01 & 0.69 & in.s.03 & 1.00\\ 
+& inch.n.01 & 0.14 & in.s.01 & 0.00\\\hline 
+\multirow{2}{*}{\textsf{philadelphia}}& philadelphia.n.01 & 1.00 & philadelphia.n.01 & 1.00\\ 
+& N/A & 0.00 & N/A & 0.00\\\hline 
+\end{tabular}
+\end{table}

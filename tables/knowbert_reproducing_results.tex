@@ -1,0 +1,15 @@
+\begin{table}[t!]
+    \centering
+    \begin{tabular}{l | c | c | c | c}
+          \hline\hline 
+          \multirow{2}{*}{\textbf{Language Model}} & \textbf{MLM} & \textbf{Wikidata} &  \textbf{\# params} & \textbf{\# params} \\
+          & \textbf{PPL}\dggr & \textbf{MRR}\textdaggerdbl & \textbf{KAR}$^\ast$ & \textbf{Ent. Embed.}$^\ast$ \\\hline
+          BERT-base & 5.5 & 0.09 & 0 & 0 \\
+          BERT-large & 4.5 & 0.11 & 0 & 0 \\
+          \hline
+          KnowBERT-Wiki & (4.3,\colbf{6.7}) & (0.26,\colbf{0.25}) & 2.4 & 141 \\
+          KnowBERT-WordNet & (4.1,\colbf{4.2}) & (0.22,\colbf{0.23}) & 4.9 & 265 \\
+          KnowBERT-W+W  & (3.5, \colbf{3.7}) & (0.31,\colbf{0.31}) & 7.3 & 406 \\
+          \hline\hline
+    \end{tabular}
+\end{table}
